@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "428948453459",
+    "project_id": "mytaxidriver-80b27",
+    "storage_bucket": "mytaxidriver-80b27.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:428948453459:android:92ef81fec6a4d9c81aaea6",
+        "android_client_info": {
+          "package_name": "com.ideativemind.driver"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD5g1mvJu40OKkiX0V5VA69qR_cFkQmOVg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

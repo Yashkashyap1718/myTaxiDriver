@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>API_KEY</key>
+	<string>AIzaSyDTJNMN9o80rO7iblN63o8AiqJavaBm3_A</string>
+	<key>GCM_SENDER_ID</key>
+	<string>428948453459</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.ideativemind.drivers</string>
+	<key>PROJECT_ID</key>
+	<string>mytaxidriver-80b27</string>
+	<key>STORAGE_BUCKET</key>
+	<string>mytaxidriver-80b27.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:428948453459:ios:588448eea48ce0811aaea6</string>
+</dict>
+</plist>
