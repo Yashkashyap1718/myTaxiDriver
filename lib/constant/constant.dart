@@ -19,7 +19,7 @@ import 'package:driver/constant_widgets/show_toast_dialog.dart';
 import 'package:driver/extension/string_extensions.dart';
 import 'package:driver/theme/app_them_data.dart';
 import 'package:driver/utils/fire_store_utils.dart';
-import 'package:firebase_storage/firebase_storage.dart';
+// import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
@@ -256,26 +256,26 @@ class Constant {
     return true;
   }
 
-  static Future<String> uploadDriverDocumentImageToFireStorage(File image, String filePath, String fileName) async {
-    print("Path : ${image.absolute.path}");
-    Reference upload = FirebaseStorage.instance.ref().child('$filePath/$fileName');
-    print("Path : ${upload.fullPath}");
-    UploadTask uploadTask = upload.putFile(image);
-    var downloadUrl = await (await uploadTask).ref.getDownloadURL();
-    return downloadUrl.toString();
-  }
+  // static Future<String> uploadDriverDocumentImageToFireStorage(File image, String filePath, String fileName) async {
+  //   print("Path : ${image.absolute.path}");
+  //   Reference upload = FirebaseStorage.instance.ref().child('$filePath/$fileName');
+  //   print("Path : ${upload.fullPath}");
+  //   UploadTask uploadTask = upload.putFile(image);
+  //   var downloadUrl = await (await uploadTask).ref.getDownloadURL();
+  //   return downloadUrl.toString();
+  // }
 
-  static Future<String> uploadUserImageToFireStorage(File image, String filePath, String fileName) async {
-    Reference upload = FirebaseStorage.instance.ref().child('$filePath/$fileName');
-    UploadTask uploadTask = upload.putFile(image);
-    var downloadUrl = await (await uploadTask.whenComplete(() {})).ref.getDownloadURL();
-    return downloadUrl.toString();
-  }
-  static Future<List<String>> uploadSupportImage(List<String> images) async {
-    var imageUrls = await Future.wait(images.map((image) =>
-        uploadUserImageToFireStorage(File(image), "supportImages/${FireStoreUtils.getCurrentUid()}", File(image).path.split("/").last)));
-    return imageUrls;
-  }
+  // static Future<String> uploadUserImageToFireStorage(File image, String filePath, String fileName) async {
+  //   Reference upload = FirebaseStorage.instance.ref().child('$filePath/$fileName');
+  //   UploadTask uploadTask = upload.putFile(image);
+  //   var downloadUrl = await (await uploadTask.whenComplete(() {})).ref.getDownloadURL();
+  //   return downloadUrl.toString();
+  // }
+  // static Future<List<String>> uploadSupportImage(List<String> images) async {
+  //   var imageUrls = await Future.wait(images.map((image) =>
+  //       uploadUserImageToFireStorage(File(image), "supportImages/${FireStoreUtils.getCurrentUid()}", File(image).path.split("/").last)));
+  //   return imageUrls;
+  // }
 
   Future<void> commonLaunchUrl(String url, {LaunchMode launchMode = LaunchMode.inAppWebView}) async {
     await launchUrl(Uri.parse(url), mode: launchMode).catchError((e) {

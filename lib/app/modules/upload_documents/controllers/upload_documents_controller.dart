@@ -103,13 +103,13 @@ class UploadDocumentsController extends GetxController {
       for (int i = 0; i < verifyDocument.value.documentImage.length; i++) {
         if (verifyDocument.value.documentImage[i].isNotEmpty) {
           if (Constant.hasValidUrl(verifyDocument.value.documentImage[i].toString()) == false) {
-            String image = await Constant.uploadDriverDocumentImageToFireStorage(
-              File(verifyDocument.value.documentImage[i].toString()),
-              "driver_documents/${document.id}/${FireStoreUtils.getCurrentUid()}",
-              verifyDocument.value.documentImage[i].split('/').last,
-            );
+            // String image = await Constant.uploadDriverDocumentImageToFireStorage(
+            //   File(verifyDocument.value.documentImage[i].toString()),
+            //   "driver_documents/${document.id}/${FireStoreUtils.getCurrentUid()}",
+            //   verifyDocument.value.documentImage[i].split('/').last,
+            // );
             verifyDocument.value.documentImage.removeAt(i);
-            verifyDocument.value.documentImage.insert(i, image);
+            // verifyDocument.value.documentImage.insert(i, image);
           }
         }
       }

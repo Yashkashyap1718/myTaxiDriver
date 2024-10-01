@@ -62,11 +62,11 @@ class EditProfileController extends GetxController {
     userModel.slug = nameController.text.toSlug(delimiter: "-");
     ShowToastDialog.showLoader("Please wait");
     if (profileImage.value.isNotEmpty && Constant.hasValidUrl(profileImage.value) == false) {
-      profileImage.value = await Constant.uploadUserImageToFireStorage(
-        File(profileImage.value),
-        "profileImage/${FireStoreUtils.getCurrentUid()}",
-        File(profileImage.value).path.split('/').last,
-      );
+      // profileImage.value = await Constant.uploadUserImageToFireStorage(
+      //   File(profileImage.value),
+      //   "profileImage/${FireStoreUtils.getCurrentUid()}",
+      //   File(profileImage.value).path.split('/').last,
+      // );
     }
     userModel.profilePic = profileImage.value;
     await FireStoreUtils.updateDriverUser(userModel);

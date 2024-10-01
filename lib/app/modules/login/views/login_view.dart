@@ -48,7 +48,7 @@ class LoginView extends StatelessWidget {
                     children: [
                       Padding(
                         padding: const EdgeInsets.only(bottom: 32),
-                        child: Center(child: SvgPicture.asset(themeChange.isDarkTheme() ? "assets/icon/splash_logo.svg" : "assets/icon/logo_black.svg")),
+                        child: Center(child: SvgPicture.asset(themeChange.isDarkTheme() ? "assets/icon/taxi.png" : "assets/icon/taxi.png")),
                       ),
                       Text(
                         "Login".tr,
@@ -69,19 +69,19 @@ class LoginView extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Container(
-                                height: 45,
-                                padding: const EdgeInsets.all(8.0),
-                                child: CountryCodeSelectorView(
-                                  isCountryNameShow: true,
-                                  countryCodeController: controller.countryCodeController,
-                                  isEnable: true,
-                                  onChanged: (value) {
-                                    controller.countryCodeController.text = value.dialCode.toString();
-                                  },
-                                ),
-                              ),
-                              const Divider(color: AppThemData.grey100),
+                              // Container(
+                              //   height: 45,
+                              //   padding: const EdgeInsets.all(8.0),
+                              //   child: CountryCodeSelectorView(
+                              //     isCountryNameShow: true,
+                              //     countryCodeController: controller.countryCodeController,
+                              //     isEnable: true,
+                              //     onChanged: (value) {
+                              //       controller.countryCodeController.text = value.dialCode.toString();
+                              //     },
+                              //   ),
+                              // ),
+                              // const Divider(color: AppThemData.grey100),
                               SizedBox(
                                 height: 45,
                                 child: TextFormField(
@@ -121,106 +121,108 @@ class LoginView extends StatelessWidget {
                               }
                             }),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 20, bottom: 20),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Container(
-                              width: 52,
-                              margin: const EdgeInsets.only(right: 10),
-                              child: const Divider(color: AppThemData.grey100),
-                            ),
-                            Text(
-                              "Continue with".tr,
-                              style: GoogleFonts.inter(fontSize: 12, color: AppThemData.grey400, fontWeight: FontWeight.w400),
-                            ),
-                            Container(
-                              width: 52,
-                              margin: const EdgeInsets.only(left: 10),
-                              child: const Divider(color: AppThemData.grey100),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Visibility(
-                        visible: Platform.isIOS,
-                        child: Center(
-                          child: InkWell(
-                            onTap: () {
-                              controller.loginWithApple();
-                            },
-                            child: Container(
-                              height: 45,
-                              width: 200,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(200),
-                                  border: Border.all(
-                                    color: themeChange.isDarkTheme() ? AppThemData.white : AppThemData.grey100,
-                                  )),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  SvgPicture.asset(
-                                    "assets/icon/ic_apple.svg",
-                                    height: 24,
-                                    width: 24,
-                                    colorFilter: ColorFilter.mode(themeChange.isDarkTheme() ? AppThemData.white : AppThemData.black, BlendMode.srcIn),
-                                  ),
-                                  const SizedBox(width: 12),
-                                  Text(
-                                    'Apple'.tr,
-                                    textAlign: TextAlign.center,
-                                    style: GoogleFonts.inter(
-                                      color: themeChange.isDarkTheme() ? AppThemData.white : AppThemData.black,
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 12),
-                      Center(
-                        child: InkWell(
-                          onTap: () {
-                            controller.loginWithGoogle();
-                          },
-                          child: Container(
-                            height: 45,
-                            width: 200,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(200),
-                                border: Border.all(
-                                  color: themeChange.isDarkTheme() ? AppThemData.white : AppThemData.grey100,
-                                )),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                SvgPicture.asset("assets/icon/ic_google.svg", height: 24, width: 24),
-                                const SizedBox(width: 12),
-                                Text(
-                                  'Google'.tr,
-                                  textAlign: TextAlign.center,
-                                  style: GoogleFonts.inter(
-                                    color: themeChange.isDarkTheme() ? AppThemData.white : AppThemData.black,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      )
+                      // Padding(
+                      //   padding: const EdgeInsets.only(top: 20, bottom: 20),
+                      //   child: Row(
+                      //     mainAxisAlignment: MainAxisAlignment.center,
+                      //     crossAxisAlignment: CrossAxisAlignment.center,
+                      //     children: [
+                      //       Container(
+                      //         width: 52,
+                      //         margin: const EdgeInsets.only(right: 10),
+                      //         child: const Divider(color: AppThemData.grey100),
+                      //       ),
+                      //       Text(
+                      //         "Continue with".tr,
+                      //         style: GoogleFonts.inter(fontSize: 12, color: AppThemData.grey400, fontWeight: FontWeight.w400),
+                      //       ),
+                      //       Container(
+                      //         width: 52,
+                      //         margin: const EdgeInsets.only(left: 10),
+                      //         child: const Divider(color: AppThemData.grey100),
+                      //       ),
+                      //     ],
+                      //   ),
+                      // ),
+                      // Visibility(
+                      //   visible: Platform.isIOS,
+                      //   child: Center(
+                      //     child: InkWell(
+                      //       onTap: () {
+                      //         controller.loginWithApple();
+                      //       },
+                      //       child: Container(
+                      //         height: 45,
+                      //         width: 200,
+                      //         decoration: BoxDecoration(
+                      //             borderRadius: BorderRadius.circular(200),
+                      //             border: Border.all(
+                      //               color: themeChange.isDarkTheme() ? AppThemData.white : AppThemData.grey100,
+                      //             )),
+                      //         child: Row(
+                      //           mainAxisSize: MainAxisSize.min,
+                      //           mainAxisAlignment: MainAxisAlignment.center,
+                      //           crossAxisAlignment: CrossAxisAlignment.center,
+                      //           children: [
+                      //             SvgPicture.asset(
+                      //               "assets/icon/ic_apple.svg",
+                      //               height: 24,
+                      //               width: 24,
+                      //               colorFilter: ColorFilter.mode(themeChange.isDarkTheme() ? AppThemData.white : AppThemData.black, BlendMode.srcIn),
+                      //             ),
+                      //             const SizedBox(width: 12),
+                      //             Text(
+                      //               'Apple'.tr,
+                      //               textAlign: TextAlign.center,
+                      //               style: GoogleFonts.inter(
+                      //                 color: themeChange.isDarkTheme() ? AppThemData.white : AppThemData.black,
+                      //                 fontSize: 14,
+                      //                 fontWeight: FontWeight.w500,
+                      //               ),
+                      //             ),
+                      //           ],
+                      //         ),
+                      //       ),
+                      //     ),
+                      //   ),
+                      // ),
+                      // const SizedBox(height: 12),
+                      // Center(
+                      //   child: InkWell(
+                      //     onTap: () {
+                      //       controller.loginWithGoogle();
+                      //     },
+                      //     child: Container(
+                      //       height: 45,
+                      //       width: 200,
+                      //       decoration: BoxDecoration(
+                      //           borderRadius: BorderRadius.circular(200),
+                      //           border: Border.all(
+                      //             color: themeChange.isDarkTheme() ? AppThemData.white : AppThemData.grey100,
+                      //           )),
+                      //       child: Row(
+                      //         mainAxisSize: MainAxisSize.min,
+                      //         mainAxisAlignment: MainAxisAlignment.center,
+                      //         crossAxisAlignment: CrossAxisAlignment.center,
+                      //         children: [
+                      //           SvgPicture.asset("assets/icon/ic_google.svg", height: 24, width: 24),
+                      //           const SizedBox(width: 12),
+                      //           Text(
+                      //             'Google'.tr,
+                      //             textAlign: TextAlign.center,
+                      //             style: GoogleFonts.inter(
+                      //               color: themeChange.isDarkTheme() ? AppThemData.white : AppThemData.black,
+                      //               fontSize: 14,
+                      //               fontWeight: FontWeight.w500,
+                      //             ),
+                      //           ),
+                      //         ],
+                      //       ),
+                      //     ),
+                      //   ),
+                      // )
+                  
+                  
                     ],
                   ),
                 ),

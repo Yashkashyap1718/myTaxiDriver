@@ -39,7 +39,7 @@ class CreateSupportTicketController extends GetxController {
     if (formKey.value.currentState!.validate()) {
       ShowToastDialog.showLoader("Please Wait".tr);
       if (supportImages.isNotEmpty && Constant.hasValidUrl(supportImages[0]) == false) {
-        supportImages.value = await Constant.uploadSupportImage(supportImages);
+        // supportImages.value = await Constant.uploadSupportImage(supportImages);
       }
     }
 
