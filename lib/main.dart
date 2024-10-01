@@ -24,7 +24,7 @@ Future<void> main() async {
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
     title: 'MyTaxi',
-    theme: ThemeData(
+    theme: ThemeData( 
       primarySwatch: Colors.amber,
       textTheme: Typography.englishLike2018.apply(fontSizeFactor: 1),
     ),
