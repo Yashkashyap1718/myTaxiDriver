@@ -81,7 +81,7 @@ class LoginView extends StatelessWidget {
                               //     },
                               //   ),
                               // ),
-                              // const Divider(color: AppThemData.grey100),
+                              const Divider(color: AppThemData.grey100),
                               SizedBox(
                                 height: 45,
                                 child: TextFormField(
