@@ -91,7 +91,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.VERIFY_OTP,
-      page: () => const VerifyOtpView(),
+      page: () => VerifyOtpView(),
       binding: VerifyOtpBinding(),
     ),
     GetPage(

@@ -1,4 +1,5 @@
 import 'package:country_code_picker/country_code_picker.dart';
+import 'package:driver/app/modules/home/views/home_view.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -24,13 +25,12 @@ Future<void> main() async {
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
     title: 'MyTaxi',
-    theme: ThemeData( 
+    theme: ThemeData(
       primarySwatch: Colors.amber,
       textTheme: Typography.englishLike2018.apply(fontSizeFactor: 1),
     ),
     supportedLocales: const [
       Locale("en"),
-
     ],
     localizationsDelegates: const [
       CountryLocalizations.delegate,
@@ -88,7 +88,8 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   }
 
   void getCurrentAppTheme() async {
-    themeChangeProvider.darkTheme = await themeChangeProvider.darkThemePreference.getTheme();
+    themeChangeProvider.darkTheme =
+        await themeChangeProvider.darkThemePreference.getTheme();
   }
 
   @override
@@ -97,34 +98,33 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       create: (_) {
         return themeChangeProvider;
       },
-      child: Consumer<DarkThemeProvider>(
-        builder: (context, value, child) {
-          return GetMaterialApp(
-              title: 'MyTaxi'.tr,
-              debugShowCheckedModeBanner: false,
-              theme: Styles.themeData(
-                  themeChangeProvider.darkTheme == 0
-                      ? true
-                      : themeChangeProvider.darkTheme == 1
-                          ? false
-                          : themeChangeProvider.getSystemThem(),
-                  context),
-              localizationsDelegates: const [
-                CountryLocalizations.delegate,
-              ],
-              locale: LocalizationService.locale,
-              fallbackLocale: LocalizationService.locale,
-              translations: LocalizationService(),
-              builder: EasyLoading.init(),
-              initialRoute: AppPages.INITIAL,
-              getPages: AppPages.routes,
-              home: GetBuilder<GlobalSettingController>(
-                  init: GlobalSettingController(),
-                  builder: (context) {
-                    return const SplashScreenView();
-                  }));
-        },
-      ),
+      child: Consumer<DarkThemeProvider>(builder: (context, value, child) {
+        return GetMaterialApp(
+            title: 'MyTaxi'.tr,
+            debugShowCheckedModeBanner: false,
+            theme: Styles.themeData(
+                themeChangeProvider.darkTheme == 0
+                    ? true
+                    : themeChangeProvider.darkTheme == 1
+                        ? false
+                        : themeChangeProvider.getSystemThem(),
+                context),
+            localizationsDelegates: const [
+              CountryLocalizations.delegate,
+            ],
+            locale: LocalizationService.locale,
+            fallbackLocale: LocalizationService.locale,
+            translations: LocalizationService(),
+            builder: EasyLoading.init(),
+            initialRoute: AppPages.INITIAL,
+            getPages: AppPages.routes,
+            home: HomeView());
+        // home: GetBuilder<GlobalSettingController>(
+        //     init: GlobalSettingController(),
+        //     builder: (context) {
+        //       return const SplashScreenView();
+        //     }));
+      }),
     );
   }
 }

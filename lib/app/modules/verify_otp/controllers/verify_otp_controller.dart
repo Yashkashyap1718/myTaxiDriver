@@ -1,9 +1,15 @@
+import 'dart:convert';
+
+import 'package:driver/app/modules/home/views/home_view.dart';
+import 'package:driver/constant/api_const.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:driver/constant_widgets/show_toast_dialog.dart';
 
-class VerifyOtpController extends GetxController {
+import 'package:http/http.dart' as http;
 
+class VerifyOtpController extends GetxController {
   RxString otpCode = "".obs;
   RxString countryCode = "".obs;
   RxString phoneNumber = "".obs;
@@ -49,5 +55,56 @@ class VerifyOtpController extends GetxController {
     );
     ShowToastDialog.closeLoader();
     return true;
+  }
+
+  Future<void> confirmOTP(
+      BuildContext context, String otp, String phoneNumber) async {
+    final Map<String, String> payload = {
+      "otp": otp,
+      "mobile_number": phoneNumber,
+    };
+
+    try {
+      final http.Response response = await http.post(
+        Uri.parse(baseURL + veriftOtpEndpoint),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode(payload),
+      );
+
+      final Map<String, dynamic> data = jsonDecode(response.body);
+      Get.offAll(const HomeView());
+      if (response.statusCode == 200) {
+        final String token = data['token'];
+        final String id = data['id'];
+        final String roleType = data['type'];
+        final String firstDigit = id.substring(0, 1);
+        final int firstDigitAsInt = int.parse(firstDigit, radix: 16);
+
+        // Show success message with Animated SnackBar
+        // AnimatedSnackBar.material(
+        //   'Welcome! User $phoneNumber',
+        //   type: AnimatedSnackBarType.success,
+        //   duration: const Duration(seconds: 5),
+        //   mobileSnackBarPosition: MobileSnackBarPosition.top,
+        // ).show(context);
+
+        // Store token or other relevant data in provider or local storage
+        // prrovider.setAccessToken(token);
+
+        // Navigate to HomeScreen or the relevant page
+        // Navigator.push(context, MaterialPageRoute(builder: (context) => const HomeScreen()));
+      } else {
+        throw Exception('Failed to confirm OTP');
+      }
+    } catch (e) {
+      debugPrint('Error: during OTP confirmation----------- $e');
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Error occurred while confirming OTP.'),
+        ),
+      );
+    }
   }
 }
