@@ -9,17 +9,21 @@ import 'package:driver/app/modules/home/views/home_view.dart';
 import 'package:driver/app/modules/permission/views/permission_view.dart';
 import 'package:driver/app/modules/signup/views/signup_view.dart';
 import 'package:driver/app/modules/verify_otp/views/verify_otp_view.dart';
+import 'package:driver/constant/api_constant.dart';
 import 'package:driver/constant/constant.dart';
 import 'package:driver/constant_widgets/show_toast_dialog.dart';
 import 'package:driver/utils/fire_store_utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
+import 'package:http/http.dart' as http;
 
 class LoginController extends GetxController {
-  TextEditingController countryCodeController = TextEditingController(text: '+91');
+  TextEditingController countryCodeController =
+      TextEditingController(text: '+91');
   TextEditingController phoneNumberController = TextEditingController();
   Rx<GlobalKey<FormState>> formKey = GlobalKey<FormState>().obs;
 
@@ -36,12 +40,80 @@ class LoginController extends GetxController {
   @override
   void onClose() {}
 
+  Future<void> sendOTP(BuildContext context) async {
+    final Map<String, String> payload = {
+      "country_code": "91", // Assuming you want to keep this static for now
+      "mobile_number": phoneNumberController.text, // Dynamic phone number input
+    };
+
+    try {
+      ShowToastDialog.showLoader("Please wait".tr);
+      final response = await http.post(
+        Uri.parse(baseURL + sendOtpEndpoint),
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode(payload),
+      );
+      log('Response Status Code: ${response.statusCode}');
+      log('Response Body: ${response.body}');
+      print('----sendOTP----');
+
+      print('---pay--$payload');
+      log(response.body); // Log the response body for debugging
+
+      if (response.statusCode == 200) {
+        // Parse the response body
+        final Map<String, dynamic> responseData = jsonDecode(response.body);
+
+        // Extract the "msg" field which contains the OTP
+        final String msg = responseData['msg'];
+        // Split the message by comma to get the OTP (the first part)
+        final List<String> parts = msg.split(',');
+        final String otp =
+            parts.first.trim(); // Trim to remove any surrounding spaces
+        print('Extracted OTP: $otp');
+        // Navigate to OTP verification screen with the phone number and OTP
+        Get.to(
+          () => VerifyOtpView(
+              // oTP: otp,
+              // phoneNumder: phoneNumberController.text,
+
+              // Pass the extracted OTP
+              ),
+        );
+        ShowToastDialog.closeLoader();
+
+        // ScaffoldMessenger.of(context).showSnackBar(
+        //   SnackBar(
+        //     content: Text(otp),
+        //   ),
+        // );
+      } else {
+        // Handle unsuccessful response
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Failed to send OTP: ${response.reasonPhrase}'),
+          ),
+        );
+      }
+    } catch (e) {
+      log('Error: $e'); // Log any errors
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Error occurred while sending request.'),
+        ),
+      );
+
+      print(e);
+    }
+  }
+
   sendCode() async {
     try {
       ShowToastDialog.showLoader("please_wait".tr);
       await FirebaseAuth.instance
           .verifyPhoneNumber(
-        phoneNumber: countryCodeController.value.text + phoneNumberController.value.text,
+        phoneNumber:
+            countryCodeController.value.text + phoneNumberController.value.text,
         verificationCompleted: (PhoneAuthCredential credential) {},
         verificationFailed: (FirebaseAuthException e) {
           debugPrint("FirebaseAuthException--->${e.message}");
@@ -76,14 +148,16 @@ class LoginController extends GetxController {
 
   Future<UserCredential?> signInWithGoogle() async {
     try {
-      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn().catchError((error) {
+      final GoogleSignInAccount? googleUser =
+          await GoogleSignIn().signIn().catchError((error) {
         ShowToastDialog.closeLoader();
         ShowToastDialog.showToast("something_went_wrong".tr);
         return null;
       });
 
       // Obtain the auth details from the request
-      final GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
+      final GoogleSignInAuthentication? googleAuth =
+          await googleUser?.authentication;
 
       // Create a new credential
       final credential = GoogleAuthProvider.credential(
@@ -162,7 +236,8 @@ class LoginController extends GetxController {
           FireStoreUtils.userExistOrNot(value.user!.uid).then((userExit) async {
             ShowToastDialog.closeLoader();
             if (userExit == true) {
-              DriverUserModel? userModel = await FireStoreUtils.getDriverUserProfile(value.user!.uid);
+              DriverUserModel? userModel =
+                  await FireStoreUtils.getDriverUserProfile(value.user!.uid);
               if (userModel != null) {
                 if (userModel.isActive == true) {
                   bool permissionGiven = await Constant.isPermissionApplied();
@@ -215,7 +290,8 @@ class LoginController extends GetxController {
             ShowToastDialog.closeLoader();
 
             if (userExit == true) {
-              DriverUserModel? userModel = await FireStoreUtils.getDriverUserProfile(value.user!.uid);
+              DriverUserModel? userModel =
+                  await FireStoreUtils.getDriverUserProfile(value.user!.uid);
               if (userModel != null) {
                 if (userModel.isActive == true) {
                   bool permissionGiven = await Constant.isPermissionApplied();

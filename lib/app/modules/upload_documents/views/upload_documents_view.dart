@@ -24,7 +24,8 @@ class UploadDocumentsView extends StatelessWidget {
   final DocumentsModel document;
   final bool isUploaded;
 
-  const UploadDocumentsView({super.key, required this.document, required this.isUploaded});
+  const UploadDocumentsView(
+      {super.key, required this.document, required this.isUploaded});
 
   @override
   Widget build(BuildContext context) {
@@ -34,8 +35,14 @@ class UploadDocumentsView extends StatelessWidget {
         builder: (controller) {
           controller.setData(isUploaded, document.id, context);
           return Scaffold(
-            backgroundColor: themeChange.isDarkTheme() ? AppThemData.black : AppThemData.white,
-            appBar: AppBarWithBorder(title: document.title, bgColor: themeChange.isDarkTheme() ? AppThemData.black : AppThemData.white),
+            backgroundColor: themeChange.isDarkTheme()
+                ? AppThemData.black
+                : AppThemData.white,
+            appBar: AppBarWithBorder(
+                title: document.title,
+                bgColor: themeChange.isDarkTheme()
+                    ? AppThemData.black
+                    : AppThemData.white),
             body: SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.all(20.0),
@@ -46,7 +53,9 @@ class UploadDocumentsView extends StatelessWidget {
                     Text(
                       'Upload'.tr + document.title,
                       style: GoogleFonts.inter(
-                        color: themeChange.isDarkTheme() ? AppThemData.grey25 : AppThemData.grey950,
+                        color: themeChange.isDarkTheme()
+                            ? AppThemData.grey25
+                            : AppThemData.grey950,
                         fontSize: 16,
                         fontWeight: FontWeight.w500,
                       ),
@@ -73,7 +82,10 @@ class UploadDocumentsView extends StatelessWidget {
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: controller.imageList.map((element) => _indicator(controller, element)).toList(),
+                                  children: controller.imageList
+                                      .map((element) =>
+                                          _indicator(controller, element))
+                                      .toList(),
                                 )
                               ],
                             ),
@@ -92,24 +104,31 @@ class UploadDocumentsView extends StatelessWidget {
                                     height: 200,
                                     padding: const EdgeInsets.all(20),
                                     decoration: ShapeDecoration(
-                                      color: themeChange.isDarkTheme() ? AppThemData.primary950 : AppThemData.primary50,
+                                      color: themeChange.isDarkTheme()
+                                          ? AppThemData.primary950
+                                          : AppThemData.primary50,
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(12),
                                       ),
-                                      image: controller.verifyDocument.value.documentImage[0].isNotEmpty
+                                      image: controller.verifyDocument.value
+                                              .documentImage[0].isNotEmpty
                                           ? DecorationImage(
                                               image: FileImage(
-                                                File(controller.verifyDocument.value.documentImage[0]),
+                                                File(controller.verifyDocument
+                                                    .value.documentImage[0]),
                                               ),
                                               fit: BoxFit.cover)
                                           : null,
                                     ),
                                     child: Visibility(
-                                      visible: controller.verifyDocument.value.documentImage[0].isEmpty,
+                                      visible: controller.verifyDocument.value
+                                          .documentImage[0].isEmpty,
                                       child: Column(
                                         mainAxisSize: MainAxisSize.min,
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
                                         children: [
                                           Icon(
                                             Icons.cloud_upload_outlined,
@@ -118,14 +137,21 @@ class UploadDocumentsView extends StatelessWidget {
                                           const SizedBox(height: 14),
                                           Column(
                                             mainAxisSize: MainAxisSize.min,
-                                            mainAxisAlignment: MainAxisAlignment.center,
-                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
                                             children: [
                                               Text(
-                                                document.isTwoSide ? '${'Upload'.tr} ${document.title} ${'Front Side'.tr}' : '${'Upload'.tr} ${document.title}',
+                                                document.isTwoSide
+                                                    ? '${'Upload'.tr} ${document.title} ${'Front Side'.tr}'
+                                                    : '${'Upload'.tr} ${document.title}',
                                                 textAlign: TextAlign.center,
                                                 style: GoogleFonts.inter(
-                                                  color: themeChange.isDarkTheme() ? AppThemData.grey25 : AppThemData.grey950,
+                                                  color:
+                                                      themeChange.isDarkTheme()
+                                                          ? AppThemData.grey25
+                                                          : AppThemData.grey950,
                                                   fontSize: 14,
                                                   fontWeight: FontWeight.w400,
                                                 ),
@@ -138,8 +164,10 @@ class UploadDocumentsView extends StatelessWidget {
                                                   color: AppThemData.primary500,
                                                   fontSize: 14,
                                                   fontWeight: FontWeight.w500,
-                                                  decoration: TextDecoration.underline,
-                                                  decorationColor: AppThemData.primary500,
+                                                  decoration:
+                                                      TextDecoration.underline,
+                                                  decorationColor:
+                                                      AppThemData.primary500,
                                                 ),
                                               ),
                                             ],
@@ -161,24 +189,31 @@ class UploadDocumentsView extends StatelessWidget {
                                     height: 200,
                                     padding: const EdgeInsets.all(20),
                                     decoration: ShapeDecoration(
-                                      color: themeChange.isDarkTheme() ? AppThemData.primary950 : AppThemData.primary50,
+                                      color: themeChange.isDarkTheme()
+                                          ? AppThemData.primary950
+                                          : AppThemData.primary50,
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(12),
                                       ),
-                                      image: controller.verifyDocument.value.documentImage[1].isNotEmpty
+                                      image: controller.verifyDocument.value
+                                              .documentImage[1].isNotEmpty
                                           ? DecorationImage(
                                               image: FileImage(
-                                                File(controller.verifyDocument.value.documentImage[1]),
+                                                File(controller.verifyDocument
+                                                    .value.documentImage[1]),
                                               ),
                                               fit: BoxFit.cover)
                                           : null,
                                     ),
                                     child: Visibility(
-                                      visible: controller.verifyDocument.value.documentImage[1].isEmpty,
+                                      visible: controller.verifyDocument.value
+                                          .documentImage[1].isEmpty,
                                       child: Column(
                                         mainAxisSize: MainAxisSize.min,
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
                                         children: [
                                           Icon(
                                             Icons.cloud_upload_outlined,
@@ -186,17 +221,23 @@ class UploadDocumentsView extends StatelessWidget {
                                           ),
                                           const SizedBox(height: 14),
                                           SizedBox(
-                                            width: Responsive.width(40, context),
+                                            width:
+                                                Responsive.width(40, context),
                                             child: Column(
                                               mainAxisSize: MainAxisSize.min,
-                                              mainAxisAlignment: MainAxisAlignment.center,
-                                              crossAxisAlignment: CrossAxisAlignment.center,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
                                               children: [
                                                 Text(
                                                   '${'Upload'.tr} ${document.title} ${'Back Side'.tr}',
                                                   textAlign: TextAlign.center,
                                                   style: GoogleFonts.inter(
-                                                    color: themeChange.isDarkTheme() ? AppThemData.grey25 : AppThemData.grey950,
+                                                    color: themeChange
+                                                            .isDarkTheme()
+                                                        ? AppThemData.grey25
+                                                        : AppThemData.grey950,
                                                     fontSize: 14,
                                                     fontWeight: FontWeight.w400,
                                                   ),
@@ -206,11 +247,14 @@ class UploadDocumentsView extends StatelessWidget {
                                                   'Browse'.tr,
                                                   textAlign: TextAlign.center,
                                                   style: GoogleFonts.inter(
-                                                    color: AppThemData.primary500,
+                                                    color:
+                                                        AppThemData.primary500,
                                                     fontSize: 14,
                                                     fontWeight: FontWeight.w500,
-                                                    decoration: TextDecoration.underline,
-                                                    decorationColor: AppThemData.primary500,
+                                                    decoration: TextDecoration
+                                                        .underline,
+                                                    decorationColor:
+                                                        AppThemData.primary500,
                                                   ),
                                                 ),
                                               ],
@@ -238,7 +282,9 @@ class UploadDocumentsView extends StatelessWidget {
                             child: Text(
                               "${"Upload clear pictures of both sides of ".tr} ${document.title}",
                               style: GoogleFonts.inter(
-                                color: themeChange.isDarkTheme() ? AppThemData.grey25 : AppThemData.grey950,
+                                color: themeChange.isDarkTheme()
+                                    ? AppThemData.grey25
+                                    : AppThemData.grey950,
                                 fontSize: 12,
                                 fontWeight: FontWeight.w400,
                               ),
@@ -259,7 +305,9 @@ class UploadDocumentsView extends StatelessWidget {
                             child: Text(
                               "${"Ensure that the photo is clear and all details on the ".tr}${document.title} ${"are visible.".tr}",
                               style: GoogleFonts.inter(
-                                color: themeChange.isDarkTheme() ? AppThemData.grey25 : AppThemData.grey950,
+                                color: themeChange.isDarkTheme()
+                                    ? AppThemData.grey25
+                                    : AppThemData.grey950,
                                 fontSize: 12,
                                 fontWeight: FontWeight.w400,
                               ),
@@ -280,7 +328,9 @@ class UploadDocumentsView extends StatelessWidget {
                             child: Text(
                               "The uploaded image should be in .jpg, .png, or .pdf format.",
                               style: GoogleFonts.inter(
-                                color: themeChange.isDarkTheme() ? AppThemData.grey25 : AppThemData.grey950,
+                                color: themeChange.isDarkTheme()
+                                    ? AppThemData.grey25
+                                    : AppThemData.grey950,
                                 fontSize: 12,
                                 fontWeight: FontWeight.w400,
                               ),
@@ -310,8 +360,10 @@ class UploadDocumentsView extends StatelessWidget {
                       onTap: isUploaded
                           ? null
                           : () async {
-                              DateTime? datetime = await Constant.selectDate(context, false);
-                              controller.dobController.text = datetime!.dateMonthYear();
+                              DateTime? datetime =
+                                  await Constant.selectDate(context, false);
+                              controller.dobController.text =
+                                  datetime!.dateMonthYear();
                             },
                       child: TextFieldWithTitle(
                         title: "Date of Birth".tr,
@@ -335,7 +387,8 @@ class UploadDocumentsView extends StatelessWidget {
                           buttonColor: AppThemData.primary500,
                           buttonTextColor: AppThemData.black,
                           onTap: () {
-                            List<dynamic> list = controller.verifyDocument.value.documentImage;
+                            List<dynamic> list =
+                                controller.verifyDocument.value.documentImage;
                             list.removeWhere((element) => element.isEmpty);
                             if (controller.nameController.text.isNotEmpty &&
                                 controller.numberController.text.isNotEmpty &&
@@ -344,9 +397,12 @@ class UploadDocumentsView extends StatelessWidget {
                                 (list.length == (document.isTwoSide ? 2 : 1))) {
                               controller.uploadDocument(document);
                             } else {
-                              controller.verifyDocument.value.documentImage.add('');
-                              controller.verifyDocument.value.documentImage.add('');
-                              ShowToastDialog.showToast("Please enter a valid details");
+                              controller.verifyDocument.value.documentImage
+                                  .add('');
+                              controller.verifyDocument.value.documentImage
+                                  .add('');
+                              ShowToastDialog.showToast(
+                                  "Please enter a valid details");
                             }
                           },
                         ),
@@ -367,11 +423,18 @@ class UploadDocumentsView extends StatelessWidget {
         () => AnimatedContainer(
           duration: const Duration(milliseconds: 150),
           margin: const EdgeInsets.symmetric(horizontal: 4.0),
-          height: controller.imageList.indexOf(element) == controller.pageIndex.value ? 10 : 8.0,
-          width: controller.imageList.indexOf(element) == controller.pageIndex.value ? 12 : 8.0,
+          height: controller.imageList.indexOf(element) ==
+                  controller.pageIndex.value
+              ? 10
+              : 8.0,
+          width: controller.imageList.indexOf(element) ==
+                  controller.pageIndex.value
+              ? 12
+              : 8.0,
           decoration: BoxDecoration(
             boxShadow: [
-              controller.imageList.indexOf(element) == controller.pageIndex.value
+              controller.imageList.indexOf(element) ==
+                      controller.pageIndex.value
                   ? BoxShadow(
                       color: AppThemData.primary50.withOpacity(0.72),
                       blurRadius: 4.0,
@@ -386,14 +449,18 @@ class UploadDocumentsView extends StatelessWidget {
                     )
             ],
             shape: BoxShape.circle,
-            color: controller.imageWidgetList.indexOf(element) == controller.pageIndex.value ? AppThemData.primary50 : AppThemData.primary500,
+            color: controller.imageWidgetList.indexOf(element) ==
+                    controller.pageIndex.value
+                ? AppThemData.primary50
+                : AppThemData.primary500,
           ),
         ),
       ),
     );
   }
 
-  buildBottomSheet(BuildContext context, UploadDocumentsController controller, int index) {
+  buildBottomSheet(
+      BuildContext context, UploadDocumentsController controller, int index) {
     return showModalBottomSheet(
         context: context,
         builder: (context) {
@@ -423,7 +490,8 @@ class UploadDocumentsView extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             IconButton(
-                                onPressed: () => controller.pickFile(source: ImageSource.camera, index: index),
+                                onPressed: () => controller.pickFile(
+                                    source: ImageSource.camera, index: index),
                                 icon: const Icon(
                                   Icons.camera_alt,
                                   size: 32,
@@ -445,7 +513,8 @@ class UploadDocumentsView extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             IconButton(
-                                onPressed: () => controller.pickFile(source: ImageSource.gallery, index: index),
+                                onPressed: () => controller.pickFile(
+                                    source: ImageSource.gallery, index: index),
                                 icon: const Icon(
                                   Icons.photo_library_sharp,
                                   size: 32,

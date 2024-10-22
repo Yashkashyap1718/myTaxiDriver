@@ -38,7 +38,8 @@ class CreateSupportTicketController extends GetxController {
   saveSupportTicket() async {
     if (formKey.value.currentState!.validate()) {
       ShowToastDialog.showLoader("Please Wait".tr);
-      if (supportImages.isNotEmpty && Constant.hasValidUrl(supportImages[0]) == false) {
+      if (supportImages.isNotEmpty &&
+          Constant.hasValidUrl(supportImages[0]) == false) {
         // supportImages.value = await Constant.uploadSupportImage(supportImages);
       }
     }
@@ -54,11 +55,12 @@ class CreateSupportTicketController extends GetxController {
     supportTicketModel.value.updateAt = Timestamp.now();
     supportTicketModel.value.type = "driver";
 
-    await FireStoreUtils.addSupportTicket(supportTicketModel.value).then((value) {
+    await FireStoreUtils.addSupportTicket(supportTicketModel.value)
+        .then((value) {
       Get.back(result: true);
       ShowToastDialog.closeLoader();
       ShowToastDialog.showToast("Support Ticket Saved".tr);
-    }).catchError((error){
+    }).catchError((error) {
       ShowToastDialog.closeLoader();
       ShowToastDialog.showToast("Something Went Wrong!".tr);
     });
@@ -70,12 +72,14 @@ class CreateSupportTicketController extends GetxController {
   Future pickMultipleImages({String? source}) async {
     try {
       if (source == "Camera") {
-        XFile? image = await imagePicker.pickImage(source: ImageSource.camera, imageQuality: 80);
+        XFile? image = await imagePicker.pickImage(
+            source: ImageSource.camera, imageQuality: 80);
         if (image == null) return;
         Get.back();
 
         // Compress the image using flutter_image_compress
-        Uint8List? compressedBytes = await FlutterImageCompress.compressWithFile(
+        Uint8List? compressedBytes =
+            await FlutterImageCompress.compressWithFile(
           image.path,
           quality: 50,
         );
@@ -92,7 +96,8 @@ class CreateSupportTicketController extends GetxController {
 
         // serviceImages.clear();
         for (var image in images) {
-          Uint8List? compressedBytes = await FlutterImageCompress.compressWithFile(
+          Uint8List? compressedBytes =
+              await FlutterImageCompress.compressWithFile(
             image.path,
             quality: 50,
           );

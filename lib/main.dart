@@ -24,13 +24,12 @@ Future<void> main() async {
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
     title: 'MyTaxi',
-    theme: ThemeData( 
+    theme: ThemeData(
       primarySwatch: Colors.amber,
       textTheme: Typography.englishLike2018.apply(fontSizeFactor: 1),
     ),
     supportedLocales: const [
       Locale("en"),
-
     ],
     localizationsDelegates: const [
       CountryLocalizations.delegate,
@@ -88,7 +87,8 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   }
 
   void getCurrentAppTheme() async {
-    themeChangeProvider.darkTheme = await themeChangeProvider.darkThemePreference.getTheme();
+    themeChangeProvider.darkTheme =
+        await themeChangeProvider.darkThemePreference.getTheme();
   }
 
   @override
@@ -144,3 +144,9 @@ void configLoading() {
     ..userInteractions = true
     ..dismissOnTap = false;
 }
+
+
+
+// jansuihead == age se dukhedi majri shiv mandir , suresh pandit
+
+

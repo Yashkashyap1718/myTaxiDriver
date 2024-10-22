@@ -17,7 +17,8 @@ class EditProfileController extends GetxController {
   //TODO: Implement EditProfileController
 
   RxString profileImage = Constant.profileConstant.obs;
-  TextEditingController countryCodeController = TextEditingController(text: '+91');
+  TextEditingController countryCodeController =
+      TextEditingController(text: '+91');
   TextEditingController phoneNumberController = TextEditingController();
   TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
@@ -43,12 +44,16 @@ class EditProfileController extends GetxController {
   }
 
   getUserData() async {
-    DriverUserModel? userModel = await FireStoreUtils.getDriverUserProfile(FireStoreUtils.getCurrentUid());
+    DriverUserModel? userModel = await FireStoreUtils.getDriverUserProfile(
+        FireStoreUtils.getCurrentUid());
     if (userModel != null) {
-      profileImage.value = (userModel.profilePic ?? "").isNotEmpty ? userModel.profilePic ?? Constant.profileConstant : Constant.profileConstant;
+      profileImage.value = (userModel.profilePic ?? "").isNotEmpty
+          ? userModel.profilePic ?? Constant.profileConstant
+          : Constant.profileConstant;
       name.value = userModel.fullName ?? '';
       nameController.text = userModel.fullName ?? '';
-      phoneNumber.value = (userModel.countryCode ?? '') + (userModel.phoneNumber ?? '');
+      phoneNumber.value =
+          (userModel.countryCode ?? '') + (userModel.phoneNumber ?? '');
       phoneNumberController.text = (userModel.phoneNumber ?? '');
       emailController.text = (userModel.email ?? '');
       selectedGender.value = (userModel.gender ?? '') == "Male" ? 1 : 2;
@@ -56,12 +61,14 @@ class EditProfileController extends GetxController {
   }
 
   saveUserData() async {
-    DriverUserModel? userModel = await FireStoreUtils.getDriverUserProfile(FireStoreUtils.getCurrentUid());
+    DriverUserModel? userModel = await FireStoreUtils.getDriverUserProfile(
+        FireStoreUtils.getCurrentUid());
     userModel!.gender = selectedGender.value == 1 ? "Male" : "Female";
     userModel.fullName = nameController.text;
     userModel.slug = nameController.text.toSlug(delimiter: "-");
     ShowToastDialog.showLoader("Please wait");
-    if (profileImage.value.isNotEmpty && Constant.hasValidUrl(profileImage.value) == false) {
+    if (profileImage.value.isNotEmpty &&
+        Constant.hasValidUrl(profileImage.value) == false) {
       // profileImage.value = await Constant.uploadUserImageToFireStorage(
       //   File(profileImage.value),
       //   "profileImage/${FireStoreUtils.getCurrentUid()}",
@@ -76,7 +83,8 @@ class EditProfileController extends GetxController {
 
   Future<void> pickFile({required ImageSource source}) async {
     try {
-      XFile? image = await imagePicker.pickImage(source: source, imageQuality: 100);
+      XFile? image =
+          await imagePicker.pickImage(source: source, imageQuality: 100);
       if (image == null) return;
 
       Get.back();

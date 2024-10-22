@@ -1,6 +1,3 @@
-import 'dart:io';
-
-import 'package:driver/constant_widgets/country_code_selector_view.dart';
 import 'package:driver/constant_widgets/round_shape_button.dart';
 import 'package:driver/constant_widgets/show_toast_dialog.dart';
 import 'package:driver/theme/app_them_data.dart';
@@ -8,8 +5,6 @@ import 'package:driver/utils/dark_theme_provider.dart';
 import 'package:driver/utils/validate_mobile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -34,8 +29,15 @@ class LoginView extends StatelessWidget {
               }
             },
             child: Scaffold(
-              backgroundColor: themeChange.isDarkTheme() ? AppThemData.black : AppThemData.white,
-              appBar: AppBar(forceMaterialTransparency: true, backgroundColor: themeChange.isDarkTheme() ? AppThemData.black : AppThemData.white, automaticallyImplyLeading: false),
+              backgroundColor: themeChange.isDarkTheme()
+                  ? AppThemData.black
+                  : AppThemData.white,
+              appBar: AppBar(
+                  forceMaterialTransparency: true,
+                  backgroundColor: themeChange.isDarkTheme()
+                      ? AppThemData.black
+                      : AppThemData.white,
+                  automaticallyImplyLeading: false),
               body: Container(
                 width: Responsive.width(100, context),
                 height: Responsive.height(100, context),
@@ -48,21 +50,39 @@ class LoginView extends StatelessWidget {
                     children: [
                       Padding(
                         padding: const EdgeInsets.only(bottom: 32),
-                        child: Center(child: SvgPicture.asset(themeChange.isDarkTheme() ? "assets/icon/taxi.png" : "assets/icon/taxi.png")),
+                        child: Center(
+                            child: Image.asset(
+                          themeChange.isDarkTheme()
+                              ? "assets/images/driver.jpeg"
+                              : "assets/images/driver.jpeg",
+                          scale: 8,
+                        )),
                       ),
                       Text(
                         "Login".tr,
-                        style: GoogleFonts.inter(fontSize: 24, color: themeChange.isDarkTheme() ? AppThemData.white : AppThemData.black, fontWeight: FontWeight.w700),
+                        style: GoogleFonts.inter(
+                            fontSize: 24,
+                            color: themeChange.isDarkTheme()
+                                ? AppThemData.white
+                                : AppThemData.black,
+                            fontWeight: FontWeight.w700),
                       ),
                       Text(
                         "Please login to continue".tr,
-                        style: GoogleFonts.inter(fontSize: 14, color: themeChange.isDarkTheme() ? AppThemData.white : AppThemData.black, fontWeight: FontWeight.w400),
+                        style: GoogleFonts.inter(
+                            fontSize: 14,
+                            color: themeChange.isDarkTheme()
+                                ? AppThemData.white
+                                : AppThemData.black,
+                            fontWeight: FontWeight.w400),
                       ),
                       Container(
-                        height: 110,
+                        height: 50,
                         width: Responsive.width(100, context),
                         margin: const EdgeInsets.only(top: 36, bottom: 48),
-                        decoration: BoxDecoration(borderRadius: BorderRadius.circular(12), border: Border.all(color: AppThemData.grey100)),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12),
+                            border: Border.all(color: AppThemData.grey100)),
                         child: Form(
                           key: controller.formKey.value,
                           child: Column(
@@ -85,12 +105,18 @@ class LoginView extends StatelessWidget {
                               SizedBox(
                                 height: 45,
                                 child: TextFormField(
-                                  cursorColor: themeChange.isDarkTheme() ? AppThemData.white : AppThemData.black,
+                                  cursorColor: themeChange.isDarkTheme()
+                                      ? AppThemData.white
+                                      : AppThemData.black,
                                   keyboardType: TextInputType.number,
                                   controller: controller.phoneNumberController,
-                                  validator: (value) => validateMobile(value, controller.countryCodeController.value.text),
+                                  validator: (value) => validateMobile(
+                                      value,
+                                      controller
+                                          .countryCodeController.value.text),
                                   inputFormatters: <TextInputFormatter>[
-                                    FilteringTextInputFormatter.allow(RegExp("[0-9]")),
+                                    FilteringTextInputFormatter.allow(
+                                        RegExp("[0-9]")),
                                   ],
                                   decoration: InputDecoration(
                                     border: InputBorder.none,
@@ -98,7 +124,8 @@ class LoginView extends StatelessWidget {
                                     enabledBorder: InputBorder.none,
                                     errorBorder: InputBorder.none,
                                     disabledBorder: InputBorder.none,
-                                    contentPadding: const EdgeInsets.only(left: 15, bottom: 0, top: 0, right: 15),
+                                    contentPadding: const EdgeInsets.only(
+                                        left: 15, bottom: 0, top: 0, right: 15),
                                     hintText: "Enter your Phone Number".tr,
                                   ),
                                 ),
@@ -114,10 +141,12 @@ class LoginView extends StatelessWidget {
                             buttonColor: AppThemData.primary500,
                             buttonTextColor: AppThemData.black,
                             onTap: () {
-                              if (controller.formKey.value.currentState!.validate()) {
+                              if (controller.formKey.value.currentState!
+                                  .validate()) {
                                 controller.sendCode();
                               } else {
-                                ShowToastDialog.showToast('Please enter a valid number'.tr);
+                                ShowToastDialog.showToast(
+                                    'Please enter a valid number'.tr);
                               }
                             }),
                       ),
@@ -221,8 +250,6 @@ class LoginView extends StatelessWidget {
                       //     ),
                       //   ),
                       // )
-                  
-                  
                     ],
                   ),
                 ),

@@ -27,7 +27,8 @@ class UploadDocumentsController extends GetxController {
 
   final ImagePicker imagePicker = ImagePicker();
 
-  Rx<VerifyDocument> verifyDocument = VerifyDocument(documentImage: ['', '']).obs;
+  Rx<VerifyDocument> verifyDocument =
+      VerifyDocument(documentImage: ['', '']).obs;
   RxList<Widget> imageWidgetList = <Widget>[].obs;
   RxList<int> imageList = <int>[].obs;
 
@@ -46,14 +47,20 @@ class UploadDocumentsController extends GetxController {
     super.onClose();
   }
 
-  setData(bool isUploaded, String id,BuildContext context) {
+  setData(bool isUploaded, String id, BuildContext context) {
     imageWidgetList.clear();
-    VerifyDocumentsController uploadDocumentsController = Get.find<VerifyDocumentsController>();
+    VerifyDocumentsController uploadDocumentsController =
+        Get.find<VerifyDocumentsController>();
     if (isUploaded) {
-      int index = uploadDocumentsController.verifyDriverModel.value.verifyDocument!.indexWhere((element) => element.documentId == id);
+      int index = uploadDocumentsController
+          .verifyDriverModel.value.verifyDocument!
+          .indexWhere((element) => element.documentId == id);
       if (index != -1) {
-        for (var element in uploadDocumentsController.verifyDriverModel.value.verifyDocument![index].documentImage) {
-          imageList.add(uploadDocumentsController.verifyDriverModel.value.verifyDocument![index].documentImage.indexOf(element));
+        for (var element in uploadDocumentsController
+            .verifyDriverModel.value.verifyDocument![index].documentImage) {
+          imageList.add(uploadDocumentsController
+              .verifyDriverModel.value.verifyDocument![index].documentImage
+              .indexOf(element));
           imageWidgetList.add(
             Center(
               child: NetworkImageWidget(
@@ -67,9 +74,15 @@ class UploadDocumentsController extends GetxController {
           );
         }
 
-        nameController.text = uploadDocumentsController.verifyDriverModel.value.verifyDocument![index].name ?? '';
-        numberController.text = uploadDocumentsController.verifyDriverModel.value.verifyDocument![index].number ?? '';
-        dobController.text = uploadDocumentsController.verifyDriverModel.value.verifyDocument![index].dob ?? '';
+        nameController.text = uploadDocumentsController
+                .verifyDriverModel.value.verifyDocument![index].name ??
+            '';
+        numberController.text = uploadDocumentsController
+                .verifyDriverModel.value.verifyDocument![index].number ??
+            '';
+        dobController.text = uploadDocumentsController
+                .verifyDriverModel.value.verifyDocument![index].dob ??
+            '';
       }
     }
   }
@@ -79,7 +92,8 @@ class UploadDocumentsController extends GetxController {
     required int index,
   }) async {
     try {
-      XFile? image = await imagePicker.pickImage(source: source, imageQuality: 60);
+      XFile? image =
+          await imagePicker.pickImage(source: source, imageQuality: 60);
       if (image == null) return;
       Get.back();
       Uint8List? compressedBytes = await FlutterImageCompress.compressWithFile(
@@ -102,7 +116,9 @@ class UploadDocumentsController extends GetxController {
     if (verifyDocument.value.documentImage.isNotEmpty) {
       for (int i = 0; i < verifyDocument.value.documentImage.length; i++) {
         if (verifyDocument.value.documentImage[i].isNotEmpty) {
-          if (Constant.hasValidUrl(verifyDocument.value.documentImage[i].toString()) == false) {
+          if (Constant.hasValidUrl(
+                  verifyDocument.value.documentImage[i].toString()) ==
+              false) {
             // String image = await Constant.uploadDriverDocumentImageToFireStorage(
             //   File(verifyDocument.value.documentImage[i].toString()),
             //   "driver_documents/${document.id}/${FireStoreUtils.getCurrentUid()}",
@@ -119,9 +135,12 @@ class UploadDocumentsController extends GetxController {
     verifyDocument.value.number = numberController.text;
     verifyDocument.value.dob = dobController.text;
     verifyDocument.value.isVerify = false;
-    VerifyDocumentsController verifyDocumentsController = Get.find<VerifyDocumentsController>();
-    DriverUserModel? userModel = await FireStoreUtils.getDriverUserProfile(FireStoreUtils.getCurrentUid());
-    List<VerifyDocument> verifyDocumentList = verifyDocumentsController.verifyDriverModel.value.verifyDocument ?? [];
+    VerifyDocumentsController verifyDocumentsController =
+        Get.find<VerifyDocumentsController>();
+    DriverUserModel? userModel = await FireStoreUtils.getDriverUserProfile(
+        FireStoreUtils.getCurrentUid());
+    List<VerifyDocument> verifyDocumentList =
+        verifyDocumentsController.verifyDriverModel.value.verifyDocument ?? [];
     verifyDocumentList.add(verifyDocument.value);
     VerifyDriverModel verifyDriverModel = VerifyDriverModel(
       createAt: Timestamp.now(),
@@ -133,11 +152,13 @@ class UploadDocumentsController extends GetxController {
     bool isUpdated = await FireStoreUtils.addDocument(verifyDriverModel);
     ShowToastDialog.closeLoader();
     if (isUpdated) {
-      ShowToastDialog.showToast("${document.title} updated, Please wait for verification.");
+      ShowToastDialog.showToast(
+          "${document.title} updated, Please wait for verification.");
       verifyDocumentsController.getData();
       Get.back();
     } else {
-      ShowToastDialog.showToast("Something went wrong, Please try again later.");
+      ShowToastDialog.showToast(
+          "Something went wrong, Please try again later.");
       Get.back();
     }
   }

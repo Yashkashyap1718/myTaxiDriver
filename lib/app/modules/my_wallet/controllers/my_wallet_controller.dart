@@ -101,8 +101,9 @@ class MyWalletController extends GetxController {
         .then((value) {
       if (value != null) {
         bankDetailsList.addAll(value);
-        if (bankDetailsList.isNotEmpty)
+        if (bankDetailsList.isNotEmpty) {
           selectedBankMethod.value = bankDetailsList[0];
+        }
       }
     });
   }

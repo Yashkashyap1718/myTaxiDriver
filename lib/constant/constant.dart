@@ -18,7 +18,6 @@ import 'package:driver/app/models/vehicle_type_model.dart';
 import 'package:driver/constant_widgets/show_toast_dialog.dart';
 import 'package:driver/extension/string_extensions.dart';
 import 'package:driver/theme/app_them_data.dart';
-import 'package:driver/utils/fire_store_utils.dart';
 // import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -47,7 +46,7 @@ class Constant {
   static DriverUserModel? userModel;
   static LocationLatLng? currentLocation;
 
-  static String mapAPIKey = "";
+  static String mapAPIKey = "AIzaSyAsVrHxXGITDH-g6ozMNeoEAtiFuhGulwI";
   static String senderId = "";
   static String jsonFileURL = "";
   static String radius = "10";
@@ -86,12 +85,13 @@ class Constant {
     }
   }
 
-  static const _chars = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz0123456789';
+  static const _chars =
+      'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz0123456789';
   static final math.Random _rnd = math.Random();
 
-
   static String getRandomString(int length) {
-    String randomString = String.fromCharCodes(Iterable.generate(length - 1, (_) => _chars.codeUnitAt(_rnd.nextInt(_chars.length))));
+    String randomString = String.fromCharCodes(Iterable.generate(
+        length - 1, (_) => _chars.codeUnitAt(_rnd.nextInt(_chars.length))));
     // print("Random String :- $randomString");
     int underScorePosition = _rnd.nextInt(length);
     // print("UnderScore Position :- $underScorePosition");
@@ -129,23 +129,29 @@ class Constant {
     }
   }
 
-  static double calculateAdminCommission({String? amount, AdminCommission? adminCommission}) {
+  static double calculateAdminCommission(
+      {String? amount, AdminCommission? adminCommission}) {
     double taxAmount = 0.0;
     if (adminCommission != null && adminCommission.active == true) {
       if ((adminCommission.isFix ?? false)) {
         taxAmount = double.parse(adminCommission.value.toString());
       } else {
-        taxAmount = (double.parse(amount.toString()) * double.parse(adminCommission.value!.toString())) / 100;
+        taxAmount = (double.parse(amount.toString()) *
+                double.parse(adminCommission.value!.toString())) /
+            100;
       }
     }
     return taxAmount;
   }
 
-  static String calculateReview({required String? reviewCount, required String? reviewSum}) {
+  static String calculateReview(
+      {required String? reviewCount, required String? reviewSum}) {
     if (reviewCount == "0.0" && reviewSum == "0.0") {
       return "0.0";
     }
-    return (double.parse(reviewSum.toString()) / double.parse(reviewCount.toString())).toStringAsFixed(1);
+    return (double.parse(reviewSum.toString()) /
+            double.parse(reviewCount.toString()))
+        .toStringAsFixed(1);
   }
 
   static String amountToShow({required String? amount}) {
@@ -162,14 +168,17 @@ class Constant {
       if (taxModel.isFix == true) {
         taxAmount = double.parse(taxModel.value.toString());
       } else {
-        taxAmount = (double.parse(amount.toString()) * double.parse(taxModel.value!.toString())) / 100;
+        taxAmount = (double.parse(amount.toString()) *
+                double.parse(taxModel.value!.toString())) /
+            100;
       }
     }
     return taxAmount;
   }
 
   static double amountBeforeTax(BookingModel bookingModel) {
-    return (double.parse(bookingModel.subTotal ?? '0.0') - double.parse((bookingModel.discount ?? '0.0').toString()));
+    return (double.parse(bookingModel.subTotal ?? '0.0') -
+        double.parse((bookingModel.discount ?? '0.0').toString()));
   }
 
   static double calculateFinalAmount(BookingModel bookingModel) {
@@ -177,10 +186,16 @@ class Constant {
     for (var element in (bookingModel.taxList ?? [])) {
       taxAmount.value = (double.parse(taxAmount.value) +
               Constant.calculateTax(
-                  amount: ((double.parse(bookingModel.subTotal ?? '0.0')) - double.parse((bookingModel.discount ?? '0.0').toString())).toString(), taxModel: element))
+                  amount: ((double.parse(bookingModel.subTotal ?? '0.0')) -
+                          double.parse(
+                              (bookingModel.discount ?? '0.0').toString()))
+                      .toString(),
+                  taxModel: element))
           .toStringAsFixed(Constant.currencyModel!.decimalDigits!);
     }
-    return (double.parse(bookingModel.subTotal ?? '0.0') - double.parse((bookingModel.discount ?? '0.0').toString())) + double.parse(taxAmount.value);
+    return (double.parse(bookingModel.subTotal ?? '0.0') -
+            double.parse((bookingModel.discount ?? '0.0').toString())) +
+        double.parse(taxAmount.value);
   }
 
   static String getUuid() {
@@ -189,7 +204,8 @@ class Constant {
 
   static Widget loader() {
     return Center(
-      child: Lottie.asset('assets/animation/loder.json', height: 100, width: 100),
+      child:
+          Lottie.asset('assets/animation/loder.json', height: 100, width: 100),
     );
   }
 
@@ -205,10 +221,23 @@ class Constant {
   }
 
   static Future<LanguageModel> getLanguage() async {
-    final String language = await Preferences.getString(Preferences.languageCodeKey);
+    final String language =
+        await Preferences.getString(Preferences.languageCodeKey);
     if (language.isEmpty) {
-      await Preferences.setString(Preferences.languageCodeKey, json.encode({"active": true, "code": "en", "id": "CcrGiUvJbPTXaU31s5l8", "name": "English"}));
-      return LanguageModel.fromJson({"active": true, "code": "en", "id": "CcrGiUvJbPTXaU31s5l8", "name": "English"});
+      await Preferences.setString(
+          Preferences.languageCodeKey,
+          json.encode({
+            "active": true,
+            "code": "en",
+            "id": "CcrGiUvJbPTXaU31s5l8",
+            "name": "English"
+          }));
+      return LanguageModel.fromJson({
+        "active": true,
+        "code": "en",
+        "id": "CcrGiUvJbPTXaU31s5l8",
+        "name": "English"
+      });
     }
     Map<String, dynamic> languageMap = jsonDecode(language);
     log(languageMap.toString());
@@ -234,7 +263,8 @@ class Constant {
   }
 
   String? validateEmail(String? value) {
-    String pattern = r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+    String pattern =
+        r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
     RegExp regExp = RegExp(pattern);
     if (value == null || value.isEmpty) {
       return "Email is Required";
@@ -246,7 +276,8 @@ class Constant {
   }
 
   static bool hasValidUrl(String value) {
-    String pattern = r'(http|https)://[\w-]+(\.[\w-]+)+([\w.,@?^=%&amp;:/~+#-]*[\w@?^=%&amp;/~+#-])?';
+    String pattern =
+        r'(http|https)://[\w-]+(\.[\w-]+)+([\w.,@?^=%&amp;:/~+#-]*[\w@?^=%&amp;/~+#-])?';
     RegExp regExp = RegExp(pattern);
     if (value.isEmpty) {
       return false;
@@ -277,7 +308,8 @@ class Constant {
   //   return imageUrls;
   // }
 
-  Future<void> commonLaunchUrl(String url, {LaunchMode launchMode = LaunchMode.inAppWebView}) async {
+  Future<void> commonLaunchUrl(String url,
+      {LaunchMode launchMode = LaunchMode.inAppWebView}) async {
     await launchUrl(Uri.parse(url), mode: launchMode).catchError((e) {
       // toast('Invalid URL: $url');
       throw e;
@@ -287,7 +319,8 @@ class Constant {
   void launchCall(String? url) {
     if (url!.validate().isNotEmpty) {
       if (Platform.isIOS) {
-        commonLaunchUrl('tel://$url', launchMode: LaunchMode.externalApplication);
+        commonLaunchUrl('tel://$url',
+            launchMode: LaunchMode.externalApplication);
       } else {
         commonLaunchUrl('tel:$url', launchMode: LaunchMode.externalApplication);
       }
@@ -296,20 +329,27 @@ class Constant {
 
   Future<Uint8List> getBytesFromAsset(String path, int width) async {
     ByteData data = await rootBundle.load(path);
-    ui.Codec codec = await ui.instantiateImageCodec(data.buffer.asUint8List(), targetWidth: width);
+    ui.Codec codec = await ui.instantiateImageCodec(data.buffer.asUint8List(),
+        targetWidth: width);
     ui.FrameInfo fi = await codec.getNextFrame();
-    return (await fi.image.toByteData(format: ui.ImageByteFormat.png))!.buffer.asUint8List();
+    return (await fi.image.toByteData(format: ui.ImageByteFormat.png))!
+        .buffer
+        .asUint8List();
   }
 
-  static Future<MapModel?> getDurationDistance(LatLng departureLatLong, LatLng destinationLatLong) async {
+  static Future<MapModel?> getDurationDistance(
+      LatLng departureLatLong, LatLng destinationLatLong) async {
     String url = 'https://maps.googleapis.com/maps/api/distancematrix/json';
-    http.Response restaurantToCustomerTime = await http.get(Uri.parse('$url?units=metric&origins=${departureLatLong.latitude},'
+    http.Response restaurantToCustomerTime = await http.get(Uri.parse(
+        '$url?units=metric&origins=${departureLatLong.latitude},'
         '${departureLatLong.longitude}&destinations=${destinationLatLong.latitude},${destinationLatLong.longitude}&key=${Constant.mapAPIKey}'));
 
     log(restaurantToCustomerTime.body.toString());
-    MapModel mapModel = MapModel.fromJson(jsonDecode(restaurantToCustomerTime.body));
+    MapModel mapModel =
+        MapModel.fromJson(jsonDecode(restaurantToCustomerTime.body));
 
-    if (mapModel.status == 'OK' && mapModel.rows!.first.elements!.first.status == "OK") {
+    if (mapModel.status == 'OK' &&
+        mapModel.rows!.first.elements!.first.status == "OK") {
       return mapModel;
     } else {
       ShowToastDialog.showToast(mapModel.errorMessage);
@@ -371,6 +411,7 @@ class Constant {
     DateTime dateTime = timestamp.toDate();
     return DateFormat('dd/MM/yyyy').format(dateTime);
   }
+
   static String timestampToTime12Hour(Timestamp? timestamp) {
     DateTime dateTime = timestamp!.toDate();
     return DateFormat.jm().format(dateTime);
