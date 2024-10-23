@@ -64,9 +64,14 @@ class FireStoreUtils {
     return isExist;
   }
 
-  static Future<bool> updateDriverUserLocation(DriverUserModel userModel) async {
+  static Future<bool> updateDriverUserLocation(
+      DriverUserModel userModel) async {
     bool isUpdate = false;
-    await fireStore.collection(CollectionName.drivers).doc(userModel.id).update(userModel.toJson()).whenComplete(() {
+    await fireStore
+        .collection(CollectionName.drivers)
+        .doc(userModel.id)
+        .update(userModel.toJson())
+        .whenComplete(() {
       isUpdate = true;
     }).catchError((error) {
       log("Failed to update user: $error");
@@ -77,7 +82,11 @@ class FireStoreUtils {
 
   static Future<bool> updateDriverUser(DriverUserModel userModel) async {
     bool isUpdate = false;
-    await fireStore.collection(CollectionName.drivers).doc(userModel.id).set(userModel.toJson()).whenComplete(() {
+    await fireStore
+        .collection(CollectionName.drivers)
+        .doc(userModel.id)
+        .set(userModel.toJson())
+        .whenComplete(() {
       isUpdate = true;
     }).catchError((error) {
       log("Failed to update user: $error");
@@ -88,7 +97,9 @@ class FireStoreUtils {
 
   static Future<List<LanguageModel>> getLanguage() async {
     List<LanguageModel> languageModelList = [];
-    QuerySnapshot snap = await FirebaseFirestore.instance.collection(CollectionName.languages).get();
+    QuerySnapshot snap = await FirebaseFirestore.instance
+        .collection(CollectionName.languages)
+        .get();
     for (var document in snap.docs) {
       Map<String, dynamic>? data = document.data() as Map<String, dynamic>?;
       if (data != null) {
@@ -105,7 +116,11 @@ class FireStoreUtils {
     DriverUserModel? userModel = await getDriverUserProfile(getCurrentUid());
     if (userModel != null) {
       userModel.isOnline = isOnline;
-      await fireStore.collection(CollectionName.drivers).doc(userModel.id).set(userModel.toJson()).whenComplete(() {
+      await fireStore
+          .collection(CollectionName.drivers)
+          .doc(userModel.id)
+          .set(userModel.toJson())
+          .whenComplete(() {
         isUpdate = true;
       }).catchError((error) {
         log("Failed to update user: $error");
@@ -117,7 +132,11 @@ class FireStoreUtils {
 
   static Future<DriverUserModel?> getDriverUserProfile(String uuid) async {
     DriverUserModel? userModel;
-    await fireStore.collection(CollectionName.drivers).doc(uuid).get().then((value) {
+    await fireStore
+        .collection(CollectionName.drivers)
+        .doc(uuid)
+        .get()
+        .then((value) {
       if (value.exists) {
         userModel = DriverUserModel.fromJson(value.data()!);
       }
@@ -130,7 +149,11 @@ class FireStoreUtils {
 
   static Future<UserModel?> getUserProfileByUserId(String uuid) async {
     UserModel? userModel;
-    await fireStore.collection(CollectionName.drivers).doc(uuid).get().then((value) {
+    await fireStore
+        .collection(CollectionName.drivers)
+        .doc(uuid)
+        .get()
+        .then((value) {
       if (value.exists) {
         userModel = UserModel.fromJson(value.data()!);
       }
@@ -143,7 +166,11 @@ class FireStoreUtils {
 
   static Future<UserModel?> getUserProfile(String uuid) async {
     UserModel? userModel;
-    await fireStore.collection(CollectionName.users).doc(uuid).get().then((value) {
+    await fireStore
+        .collection(CollectionName.users)
+        .doc(uuid)
+        .get()
+        .then((value) {
       if (value.exists) {
         userModel = UserModel.fromJson(value.data()!);
       }
@@ -157,7 +184,10 @@ class FireStoreUtils {
   static Future<bool?> deleteDriverUser() async {
     bool? isDelete;
     try {
-      await fireStore.collection(CollectionName.drivers).doc(FireStoreUtils.getCurrentUid()).delete();
+      await fireStore
+          .collection(CollectionName.drivers)
+          .doc(FireStoreUtils.getCurrentUid())
+          .delete();
       await firebaseAuth.currentUser!.delete().then((value) {
         isDelete = true;
       });
@@ -170,10 +200,14 @@ class FireStoreUtils {
 
   static Future<bool?> updateDriverUserWallet({required String amount}) async {
     bool isAdded = false;
-    await getDriverUserProfile(FireStoreUtils.getCurrentUid()).then((value) async {
+    await getDriverUserProfile(FireStoreUtils.getCurrentUid())
+        .then((value) async {
       if (value != null) {
         DriverUserModel userModel = value;
-        userModel.walletAmount = (double.parse(userModel.walletAmount.toString()) + double.parse(amount)).toString();
+        userModel.walletAmount =
+            (double.parse(userModel.walletAmount.toString()) +
+                    double.parse(amount))
+                .toString();
         await FireStoreUtils.updateDriverUser(userModel).then((value) {
           isAdded = value;
         });
@@ -184,10 +218,14 @@ class FireStoreUtils {
 
   static Future<bool?> updateTotalEarning({required String amount}) async {
     bool isAdded = false;
-    await getDriverUserProfile(FireStoreUtils.getCurrentUid()).then((value) async {
+    await getDriverUserProfile(FireStoreUtils.getCurrentUid())
+        .then((value) async {
       if (value != null) {
         DriverUserModel userModel = value;
-        userModel.totalEarning = (double.parse(userModel.totalEarning.toString()) + double.parse(amount)).toString();
+        userModel.totalEarning =
+            (double.parse(userModel.totalEarning.toString()) +
+                    double.parse(amount))
+                .toString();
         await FireStoreUtils.updateDriverUser(userModel).then((value) {
           isAdded = value;
         });
@@ -196,12 +234,16 @@ class FireStoreUtils {
     return isAdded;
   }
 
-  static Future<bool?> updateOtherUserWallet({required String amount, required String id}) async {
+  static Future<bool?> updateOtherUserWallet(
+      {required String amount, required String id}) async {
     bool isAdded = false;
     await getDriverUserProfile(id).then((value) async {
       if (value != null) {
         DriverUserModel userModel = value;
-        userModel.walletAmount = (double.parse(userModel.walletAmount.toString()) + double.parse(amount)).toString();
+        userModel.walletAmount =
+            (double.parse(userModel.walletAmount.toString()) +
+                    double.parse(amount))
+                .toString();
         await FireStoreUtils.updateDriverUser(userModel).then((value) {
           isAdded = value;
         });
@@ -212,7 +254,11 @@ class FireStoreUtils {
 
   static Future<BookingModel?> getRideDetails(String bookingId) async {
     BookingModel? bookingModel;
-    await fireStore.collection(CollectionName.bookings).where("id", isEqualTo: bookingId).get().then((value) {
+    await fireStore
+        .collection(CollectionName.bookings)
+        .where("id", isEqualTo: bookingId)
+        .get()
+        .then((value) {
       for (var element in value.docs) {
         bookingModel = BookingModel.fromJson(element.data());
       }
@@ -224,23 +270,42 @@ class FireStoreUtils {
 
   static Future<List<VehicleTypeModel>?> getVehicleType() async {
     List<VehicleTypeModel> vehicleTypeList = [];
-    await fireStore.collection(CollectionName.vehicleType).where("isActive", isEqualTo: true).get().then((value) {
-      print("Length : ${value.docs.length}");
-      for (var element in value.docs) {
-        VehicleTypeModel vehicleTypeModel = VehicleTypeModel.fromJson(element.data());
+    try {
+      final querySnapshot = await fireStore
+          .collection(CollectionName.vehicleType)
+          .where("isActive", isEqualTo: true)
+          .get();
+
+      print("*****Length : ${querySnapshot.docs.length}");
+
+      if (querySnapshot.docs.isEmpty) {
+        print("No active vehicle types found.");
+        return vehicleTypeList; // Return empty list if no documents are found
+      }
+
+      for (var element in querySnapshot.docs) {
+        VehicleTypeModel vehicleTypeModel =
+            VehicleTypeModel.fromJson(element.data());
         vehicleTypeList.add(vehicleTypeModel);
       }
-    }).catchError((error) {
-      log(error.toString());
-    });
-    return vehicleTypeList;
+    } catch (error) {
+      log("Error fetching vehicle types: $error");
+      return null; // Return null or an empty list in case of an error
+    }
+
+    return vehicleTypeList; // Returns the populated list or an empty list
   }
 
   static Future<List<DocumentsModel>?> getDocumentList() async {
     List<DocumentsModel> documentList = [];
-    await fireStore.collection(CollectionName.documents).where("isEnable", isEqualTo: true).get().then((value) {
+    await fireStore
+        .collection(CollectionName.documents)
+        .where("isEnable", isEqualTo: true)
+        .get()
+        .then((value) {
       for (var element in value.docs) {
-        DocumentsModel vehicleTypeModel = DocumentsModel.fromJson(element.data());
+        DocumentsModel vehicleTypeModel =
+            DocumentsModel.fromJson(element.data());
         documentList.add(vehicleTypeModel);
       }
     }).catchError((error) {
@@ -251,9 +316,14 @@ class FireStoreUtils {
 
   static Future<List<VehicleBrandModel>?> getVehicleBrand() async {
     List<VehicleBrandModel> vehicleTypeList = [];
-    await fireStore.collection(CollectionName.vehicleBrand).where("isEnable", isEqualTo: true).get().then((value) {
+    await fireStore
+        .collection(CollectionName.vehicleBrand)
+        .where("isEnable", isEqualTo: true)
+        .get()
+        .then((value) {
       for (var element in value.docs) {
-        VehicleBrandModel vehicleTypeModel = VehicleBrandModel.fromJson(element.data());
+        VehicleBrandModel vehicleTypeModel =
+            VehicleBrandModel.fromJson(element.data());
         vehicleTypeList.add(vehicleTypeModel);
       }
     }).catchError((error) {
@@ -262,7 +332,8 @@ class FireStoreUtils {
     return vehicleTypeList;
   }
 
-  static Future<List<VehicleModelModel>?> getVehicleModel(String brandId) async {
+  static Future<List<VehicleModelModel>?> getVehicleModel(
+      String brandId) async {
     List<VehicleModelModel> vehicleTypeList = [];
     await fireStore
         .collection(CollectionName.vehicleModel)
@@ -271,7 +342,8 @@ class FireStoreUtils {
         .get()
         .then((value) {
       for (var element in value.docs) {
-        VehicleModelModel vehicleTypeModel = VehicleModelModel.fromJson(element.data());
+        VehicleModelModel vehicleTypeModel =
+            VehicleModelModel.fromJson(element.data());
         vehicleTypeList.add(vehicleTypeModel);
       }
     }).catchError((error) {
@@ -282,7 +354,11 @@ class FireStoreUtils {
 
   static Future<bool> addDocument(VerifyDriverModel verifyDriver) async {
     bool isUpdate = false;
-    await fireStore.collection(CollectionName.verifyDriver).doc(verifyDriver.driverId).set(verifyDriver.toJson()).whenComplete(() {
+    await fireStore
+        .collection(CollectionName.verifyDriver)
+        .doc(verifyDriver.driverId)
+        .set(verifyDriver.toJson())
+        .whenComplete(() {
       isUpdate = true;
     }).catchError((error) {
       log("Failed to update data: $error");
@@ -294,7 +370,11 @@ class FireStoreUtils {
   static Future<VerifyDriverModel?> getVerifyDriver(String uuid) async {
     VerifyDriverModel? verifyDriverModel;
 
-    await fireStore.collection(CollectionName.verifyDriver).where('driverId', isEqualTo: uuid).get().then((value) {
+    await fireStore
+        .collection(CollectionName.verifyDriver)
+        .where('driverId', isEqualTo: uuid)
+        .get()
+        .then((value) {
       if (value.docs.isNotEmpty) {
         verifyDriverModel = VerifyDriverModel.fromJson(value.docs.first.data());
       } else {
@@ -309,7 +389,11 @@ class FireStoreUtils {
 
   Future<CurrencyModel?> getCurrency() async {
     CurrencyModel? currencyModel;
-    await fireStore.collection(CollectionName.currency).where("active", isEqualTo: true).get().then((value) {
+    await fireStore
+        .collection(CollectionName.currency)
+        .where("active", isEqualTo: true)
+        .get()
+        .then((value) {
       if (value.docs.isNotEmpty) {
         currencyModel = CurrencyModel.fromJson(value.docs.first.data());
       }
@@ -318,13 +402,19 @@ class FireStoreUtils {
   }
 
   getSettings() async {
-    await fireStore.collection(CollectionName.settings).doc("constant").get().then((value) {
+    await fireStore
+        .collection(CollectionName.settings)
+        .doc("constant")
+        .get()
+        .then((value) {
       if (value.exists) {
         Constant.mapAPIKey = value.data()!["googleMapKey"];
         Constant.senderId = value.data()!["notification_senderId"];
         Constant.jsonFileURL = value.data()!["jsonFileURL"];
-        Constant.minimumAmountToWithdrawal = value.data()!["minimum_amount_withdraw"];
-        Constant.minimumAmountToDeposit = value.data()!["minimum_amount_deposit"];
+        Constant.minimumAmountToWithdrawal =
+            value.data()!["minimum_amount_withdraw"];
+        Constant.minimumAmountToDeposit =
+            value.data()!["minimum_amount_deposit"];
         Constant.appName = value.data()!["appName"];
         Constant.appColor = value.data()!["appColor"];
         Constant.termsAndConditions = value.data()!["termsAndConditions"];
@@ -332,49 +422,88 @@ class FireStoreUtils {
         Constant.aboutApp = value.data()!["aboutApp"];
       }
     });
-    await fireStore.collection(CollectionName.settings).doc("globalValue").get().then((value) {
+    await fireStore
+        .collection(CollectionName.settings)
+        .doc("globalValue")
+        .get()
+        .then((value) {
       if (value.exists) {
         Constant.distanceType = value.data()!["distanceType"];
         Constant.driverLocationUpdate = value.data()!["driverLocationUpdate"];
         Constant.radius = value.data()!["radius"];
-        Constant.minimumAmountToAcceptRide = value.data()!["minimum_amount_accept_ride"];
+        Constant.minimumAmountToAcceptRide =
+            value.data()!["minimum_amount_accept_ride"];
       }
     });
-    await fireStore.collection(CollectionName.settings).doc("canceling_reason").get().then((value) {
+    await fireStore
+        .collection(CollectionName.settings)
+        .doc("canceling_reason")
+        .get()
+        .then((value) {
       if (value.exists) {
         Constant.cancellationReason = value.data()!["reasons"];
       }
     });
 
-    // await fireStore.collection(CollectionName.settings).doc("global").get().then((value) {
-    //   if (value.exists) {
-    //     // Constant.appVersion = value.data()!["appVersion"];
-    //   }
-    // });
-
-    await fireStore.collection(CollectionName.settings).doc("admin_commission").get().then((value) {
-      AdminCommission adminCommission = AdminCommission.fromJson(value.data()!);
-      if (adminCommission.active == true) {
-        Constant.adminCommission = adminCommission;
+    await fireStore
+        .collection(CollectionName.settings)
+        .doc("global")
+        .get()
+        .then((value) {
+      if (value.exists) {
+        // Constant.appVersion = value.data()!["appVersion"];
       }
     });
 
-    // await fireStore.collection(CollectionName.settings).doc("referral").get().then((value) {
-    //   if (value.exists) {
-    //     Constant.referralAmount = value.data()!["referralAmount"];
-    //   }
-    // });
-    //
-    // await fireStore.collection(CollectionName.settings).doc("contact_us").get().then((value) {
-    //   if (value.exists) {
-    //     Constant.supportURL = value.data()!["supportURL"];
-    //   }
-    // });
+    await fireStore
+        .collection(CollectionName.settings)
+        .doc("admin_commission")
+        .get()
+        .then((value) {
+      // Check if the document exists and contains data
+      if (value.exists && value.data() != null) {
+        AdminCommission adminCommission =
+            AdminCommission.fromJson(value.data()!);
+        if (adminCommission.active == true) {
+          Constant.adminCommission = adminCommission;
+        }
+      } else {
+        // Handle the case when the document doesn't exist or has no data
+        print('************Document does not exist or has no data');
+      }
+    }).catchError((error) {
+      // Log the error or handle it
+      print('************Error fetching admin commission: $error');
+    });
+
+    await fireStore
+        .collection(CollectionName.settings)
+        .doc("referral")
+        .get()
+        .then((value) {
+      if (value.exists) {
+        Constant.referralAmount = value.data()!["referralAmount"];
+      }
+    });
+
+    await fireStore
+        .collection(CollectionName.settings)
+        .doc("contact_us")
+        .get()
+        .then((value) {
+      if (value.exists) {
+        Constant.supportURL = value.data()!["supportURL"];
+      }
+    });
   }
 
   Future<PaymentModel?> getPayment() async {
     PaymentModel? paymentModel;
-    await fireStore.collection(CollectionName.settings).doc("payment").get().then((value) {
+    await fireStore
+        .collection(CollectionName.settings)
+        .doc("payment")
+        .get()
+        .then((value) {
       paymentModel = PaymentModel.fromJson(value.data()!);
       Constant.paymentModel = PaymentModel.fromJson(value.data()!);
     });
@@ -393,7 +522,8 @@ class FireStoreUtils {
         .get()
         .then((value) {
       for (var element in value.docs) {
-        WalletTransactionModel walletTransactionModel = WalletTransactionModel.fromJson(element.data());
+        WalletTransactionModel walletTransactionModel =
+            WalletTransactionModel.fromJson(element.data());
         walletTransactionModelList.add(walletTransactionModel);
       }
     }).catchError((error) {
@@ -402,7 +532,8 @@ class FireStoreUtils {
     return walletTransactionModelList;
   }
 
-  static Future<bool?> setWalletTransaction(WalletTransactionModel walletTransactionModel) async {
+  static Future<bool?> setWalletTransaction(
+      WalletTransactionModel walletTransactionModel) async {
     bool isAdded = false;
     log("====> 3");
     await fireStore
@@ -420,7 +551,11 @@ class FireStoreUtils {
 
   static Future<bool?> setBooking(BookingModel bookingModel) async {
     bool isAdded = false;
-    await fireStore.collection(CollectionName.bookings).doc(bookingModel.id).set(bookingModel.toJson()).then((value) {
+    await fireStore
+        .collection(CollectionName.bookings)
+        .doc(bookingModel.id)
+        .set(bookingModel.toJson())
+        .then((value) {
       isAdded = true;
     }).catchError((error) {
       log("Failed to add ride: $error");
@@ -431,17 +566,25 @@ class FireStoreUtils {
 
   StreamController<List<BookingModel>>? getNearestBookingController;
 
-  Stream<List<BookingModel>> getBookings(double? latitude, double? longLatitude) async* {
-    getNearestBookingController = StreamController<List<BookingModel>>.broadcast();
+  Stream<List<BookingModel>> getBookings(
+      double? latitude, double? longLatitude) async* {
+    getNearestBookingController =
+        StreamController<List<BookingModel>>.broadcast();
     List<BookingModel> bookingsList = [];
     Query query = fireStore
         .collection(CollectionName.bookings)
         .where('bookingStatus', isEqualTo: BookingStatus.bookingPlaced)
-        .where('vehicleType.id', isEqualTo: Constant.userModel!.driverVehicleDetails!.vehicleTypeId);
-    GeoFirePoint center = GeoFlutterFire().point(latitude: latitude ?? 0.0, longitude: longLatitude ?? 0.0);
+        .where('vehicleType.id',
+            isEqualTo: Constant.userModel!.driverVehicleDetails!.vehicleTypeId);
+    GeoFirePoint center = GeoFlutterFire()
+        .point(latitude: latitude ?? 0.0, longitude: longLatitude ?? 0.0);
     Stream<List<DocumentSnapshot>> stream = GeoFlutterFire()
         .collection(collectionRef: query)
-        .within(center: center, radius: double.parse(Constant.radius), field: 'position', strictMode: true);
+        .within(
+            center: center,
+            radius: double.parse(Constant.radius),
+            field: 'position',
+            strictMode: true);
 
     stream.listen((List<DocumentSnapshot> documentList) {
       log("Length= : ${documentList.length}");
@@ -449,12 +592,15 @@ class FireStoreUtils {
       for (var document in documentList) {
         final data = document.data() as Map<String, dynamic>;
         BookingModel bookingModel = BookingModel.fromJson(data);
-        if (bookingModel.driverId != null && bookingModel.driverId!.isNotEmpty) {
+        if (bookingModel.driverId != null &&
+            bookingModel.driverId!.isNotEmpty) {
           if ((bookingModel.driverId ?? '') != FireStoreUtils.getCurrentUid()) {
             bookingsList.add(bookingModel);
           }
-        } else if (bookingModel.rejectedDriverId != null && bookingModel.rejectedDriverId!.isNotEmpty) {
-          if (!(bookingModel.rejectedDriverId ?? []).contains(FireStoreUtils.getCurrentUid())) {
+        } else if (bookingModel.rejectedDriverId != null &&
+            bookingModel.rejectedDriverId!.isNotEmpty) {
+          if (!(bookingModel.rejectedDriverId ?? [])
+              .contains(FireStoreUtils.getCurrentUid())) {
             bookingsList.add(bookingModel);
           }
         } else {
@@ -476,11 +622,16 @@ class FireStoreUtils {
   StreamController<List<BookingModel>>? getHomeOngoingBookingController;
 
   Stream<List<BookingModel>> getHomeOngoingBookings() async* {
-    getHomeOngoingBookingController = StreamController<List<BookingModel>>.broadcast();
+    getHomeOngoingBookingController =
+        StreamController<List<BookingModel>>.broadcast();
     List<BookingModel> bookingsList = [];
     Stream<QuerySnapshot> stream1 = fireStore
         .collection(CollectionName.bookings)
-        .where('bookingStatus', whereIn: [BookingStatus.bookingAccepted, BookingStatus.bookingPlaced, BookingStatus.bookingOngoing])
+        .where('bookingStatus', whereIn: [
+          BookingStatus.bookingAccepted,
+          BookingStatus.bookingPlaced,
+          BookingStatus.bookingOngoing
+        ])
         .where('driverId', isEqualTo: Constant.userModel!.id)
         .snapshots();
     stream1.listen((QuerySnapshot querySnapshot) {
@@ -489,7 +640,8 @@ class FireStoreUtils {
       for (var document in querySnapshot.docs) {
         final data = document.data() as Map<String, dynamic>;
         BookingModel bookingModel = BookingModel.fromJson(data);
-        if (bookingModel.driverId != null && bookingModel.driverId!.isNotEmpty) {
+        if (bookingModel.driverId != null &&
+            bookingModel.driverId!.isNotEmpty) {
           if ((bookingModel.driverId ?? '') == FireStoreUtils.getCurrentUid()) {
             bookingsList.add(bookingModel);
           }
@@ -513,7 +665,8 @@ class FireStoreUtils {
   StreamController<List<BookingModel>>? getOngoingBookingController;
 
   Stream<List<BookingModel>> getOngoingBookings() async* {
-    getOngoingBookingController = StreamController<List<BookingModel>>.broadcast();
+    getOngoingBookingController =
+        StreamController<List<BookingModel>>.broadcast();
     List<BookingModel> bookingsList = [];
 
     Stream<QuerySnapshot> stream = fireStore
@@ -528,7 +681,8 @@ class FireStoreUtils {
       for (var document in querySnapshot.docs) {
         final data = document.data() as Map<String, dynamic>;
         BookingModel bookingModel = BookingModel.fromJson(data);
-        if (bookingModel.driverId != null && bookingModel.driverId!.isNotEmpty) {
+        if (bookingModel.driverId != null &&
+            bookingModel.driverId!.isNotEmpty) {
           if ((bookingModel.driverId ?? '') == FireStoreUtils.getCurrentUid()) {
             bookingsList.add(bookingModel);
           }
@@ -547,7 +701,8 @@ class FireStoreUtils {
       for (var document in querySnapshot.docs) {
         final data = document.data() as Map<String, dynamic>;
         BookingModel bookingModel = BookingModel.fromJson(data);
-        if (bookingModel.driverId != null && bookingModel.driverId!.isNotEmpty) {
+        if (bookingModel.driverId != null &&
+            bookingModel.driverId!.isNotEmpty) {
           if ((bookingModel.driverId ?? '') == FireStoreUtils.getCurrentUid()) {
             bookingsList.add(bookingModel);
           }
@@ -568,7 +723,8 @@ class FireStoreUtils {
   StreamController<List<BookingModel>>? getCompletedBookingController;
 
   Stream<List<BookingModel>> getCompletedBookings() async* {
-    getCompletedBookingController = StreamController<List<BookingModel>>.broadcast();
+    getCompletedBookingController =
+        StreamController<List<BookingModel>>.broadcast();
     List<BookingModel> bookingsList = [];
 
     Stream<QuerySnapshot> stream = fireStore
@@ -583,7 +739,8 @@ class FireStoreUtils {
       for (var document in querySnapshot.docs) {
         final data = document.data() as Map<String, dynamic>;
         BookingModel bookingModel = BookingModel.fromJson(data);
-        if (bookingModel.driverId != null && bookingModel.driverId!.isNotEmpty) {
+        if (bookingModel.driverId != null &&
+            bookingModel.driverId!.isNotEmpty) {
           if ((bookingModel.driverId ?? '') == FireStoreUtils.getCurrentUid()) {
             bookingsList.add(bookingModel);
           }
@@ -604,7 +761,8 @@ class FireStoreUtils {
   StreamController<List<BookingModel>>? getCancelledBookingController;
 
   Stream<List<BookingModel>> getCancelledBookings() async* {
-    getCancelledBookingController = StreamController<List<BookingModel>>.broadcast();
+    getCancelledBookingController =
+        StreamController<List<BookingModel>>.broadcast();
     List<BookingModel> bookingsList = [];
 
     Stream<QuerySnapshot> stream = fireStore
@@ -619,7 +777,8 @@ class FireStoreUtils {
       for (var document in querySnapshot.docs) {
         final data = document.data() as Map<String, dynamic>;
         BookingModel bookingModel = BookingModel.fromJson(data);
-        if (bookingModel.driverId != null && bookingModel.driverId!.isNotEmpty) {
+        if (bookingModel.driverId != null &&
+            bookingModel.driverId!.isNotEmpty) {
           if ((bookingModel.driverId ?? '') == FireStoreUtils.getCurrentUid()) {
             bookingsList.add(bookingModel);
           }
@@ -640,7 +799,8 @@ class FireStoreUtils {
   StreamController<List<BookingModel>>? getRejectedBookingController;
 
   Stream<List<BookingModel>> getRejectedBookings() async* {
-    getRejectedBookingController = StreamController<List<BookingModel>>.broadcast();
+    getRejectedBookingController =
+        StreamController<List<BookingModel>>.broadcast();
     List<BookingModel> bookingsList = [];
 
     Stream<QuerySnapshot> stream = fireStore
@@ -654,8 +814,10 @@ class FireStoreUtils {
       for (var document in querySnapshot.docs) {
         final data = document.data() as Map<String, dynamic>;
         BookingModel bookingModel = BookingModel.fromJson(data);
-        if (bookingModel.rejectedDriverId != null && bookingModel.rejectedDriverId!.isNotEmpty) {
-          if ((bookingModel.rejectedDriverId ?? []).contains(FireStoreUtils.getCurrentUid())) {
+        if (bookingModel.rejectedDriverId != null &&
+            bookingModel.rejectedDriverId!.isNotEmpty) {
+          if ((bookingModel.rejectedDriverId ?? [])
+              .contains(FireStoreUtils.getCurrentUid())) {
             bookingsList.add(bookingModel);
           }
         }
@@ -681,7 +843,8 @@ class FireStoreUtils {
         .get()
         .then((value) {
       for (var element in value.docs) {
-        NotificationModel notificationModel = NotificationModel.fromJson(element.data());
+        NotificationModel notificationModel =
+            NotificationModel.fromJson(element.data());
         notificationModelList.add(notificationModel);
       }
     }).catchError((error) {
@@ -690,9 +853,14 @@ class FireStoreUtils {
     return notificationModelList;
   }
 
-  static Future<bool?> setNotification(NotificationModel notificationModel) async {
+  static Future<bool?> setNotification(
+      NotificationModel notificationModel) async {
     bool isAdded = false;
-    await fireStore.collection(CollectionName.notification).doc(notificationModel.id).set(notificationModel.toJson()).then((value) {
+    await fireStore
+        .collection(CollectionName.notification)
+        .doc(notificationModel.id)
+        .set(notificationModel.toJson())
+        .then((value) {
       isAdded = true;
     }).catchError((error) {
       log("Failed to update user: $error");
@@ -701,9 +869,14 @@ class FireStoreUtils {
     return isAdded;
   }
 
-  static Future<List<ReviewModel>?> getReviewList(DriverUserModel driverUserModel) async {
+  static Future<List<ReviewModel>?> getReviewList(
+      DriverUserModel driverUserModel) async {
     List<ReviewModel> reviewModelList = [];
-    await fireStore.collection(CollectionName.review).where("driverId", isEqualTo: driverUserModel.id).get().then((value) {
+    await fireStore
+        .collection(CollectionName.review)
+        .where("driverId", isEqualTo: driverUserModel.id)
+        .get()
+        .then((value) {
       for (var element in value.docs) {
         ReviewModel reviewModel = ReviewModel.fromJson(element.data());
         reviewModelList.add(reviewModel);
@@ -712,11 +885,17 @@ class FireStoreUtils {
     return reviewModelList;
   }
 
-  static Future<List<BankDetailsModel>?> getBankDetailList(String? driverId) async {
+  static Future<List<BankDetailsModel>?> getBankDetailList(
+      String? driverId) async {
     List<BankDetailsModel> bankDetailsList = [];
-    await fireStore.collection(CollectionName.bankDetails).where("driverID", isEqualTo: driverId).get().then((value) {
+    await fireStore
+        .collection(CollectionName.bankDetails)
+        .where("driverID", isEqualTo: driverId)
+        .get()
+        .then((value) {
       for (var element in value.docs) {
-        BankDetailsModel bankDetailModel = BankDetailsModel.fromJson(element.data());
+        BankDetailsModel bankDetailModel =
+            BankDetailsModel.fromJson(element.data());
         bankDetailsList.add(bankDetailModel);
       }
     });
@@ -725,7 +904,11 @@ class FireStoreUtils {
 
   static Future<bool> addBankDetail(BankDetailsModel bankDetailsModel) async {
     bool isUpdate = false;
-    await fireStore.collection(CollectionName.bankDetails).doc(bankDetailsModel.id).set(bankDetailsModel.toJson()).whenComplete(() {
+    await fireStore
+        .collection(CollectionName.bankDetails)
+        .doc(bankDetailsModel.id)
+        .set(bankDetailsModel.toJson())
+        .whenComplete(() {
       isUpdate = true;
     }).catchError((error) {
       log("Failed to update data: $error");
@@ -734,9 +917,14 @@ class FireStoreUtils {
     return isUpdate;
   }
 
-  static Future<bool> updateBankDetail(BankDetailsModel bankDetailsModel) async {
+  static Future<bool> updateBankDetail(
+      BankDetailsModel bankDetailsModel) async {
     bool isUpdate = false;
-    await fireStore.collection(CollectionName.bankDetails).doc(bankDetailsModel.id).update(bankDetailsModel.toJson()).whenComplete(() {
+    await fireStore
+        .collection(CollectionName.bankDetails)
+        .doc(bankDetailsModel.id)
+        .update(bankDetailsModel.toJson())
+        .whenComplete(() {
       isUpdate = true;
     }).catchError((error) {
       log("Failed to update data: $error");
@@ -747,7 +935,11 @@ class FireStoreUtils {
 
   static Future<bool?> setWithdrawRequest(WithdrawModel withdrawModel) async {
     bool isAdded = false;
-    await fireStore.collection(CollectionName.withdrawalHistory).doc(withdrawModel.id).set(withdrawModel.toJson()).then((value) {
+    await fireStore
+        .collection(CollectionName.withdrawalHistory)
+        .doc(withdrawModel.id)
+        .set(withdrawModel.toJson())
+        .then((value) {
       isAdded = true;
     }).catchError((error) {
       log("Failed to update user: $error");
@@ -775,8 +967,9 @@ class FireStoreUtils {
   }
 
   static Future<int> getTotalRide() async {
-    final Query<Map<String, dynamic>> productList =
-        FirebaseFirestore.instance.collection(CollectionName.bookings).where("driverId", isEqualTo: getCurrentUid());
+    final Query<Map<String, dynamic>> productList = FirebaseFirestore.instance
+        .collection(CollectionName.bookings)
+        .where("driverId", isEqualTo: getCurrentUid());
     AggregateQuerySnapshot query = await productList.count().get();
     log('The number of products: ${query.count}');
     return query.count ?? 0;
@@ -813,8 +1006,9 @@ class FireStoreUtils {
   }
 
   static Future<int> getRejectedRide() async {
-    final Query<Map<String, dynamic>> productList =
-        FirebaseFirestore.instance.collection(CollectionName.bookings).where("rejectedDriverId", arrayContains: getCurrentUid());
+    final Query<Map<String, dynamic>> productList = FirebaseFirestore.instance
+        .collection(CollectionName.bookings)
+        .where("rejectedDriverId", arrayContains: getCurrentUid());
     AggregateQuerySnapshot query = await productList.count().get();
     log('The number of products: ${query.count}');
     return query.count ?? 0;
@@ -832,9 +1026,14 @@ class FireStoreUtils {
 
   static Future<List<SupportReasonModel>> getSupportReason() async {
     List<SupportReasonModel> supportReasonList = [];
-    await fireStore.collection(CollectionName.supportReason).where("type", isEqualTo: "driver").get().then((value) {
+    await fireStore
+        .collection(CollectionName.supportReason)
+        .where("type", isEqualTo: "driver")
+        .get()
+        .then((value) {
       for (var element in value.docs) {
-        SupportReasonModel supportReasonModel = SupportReasonModel.fromJson(element.data());
+        SupportReasonModel supportReasonModel =
+            SupportReasonModel.fromJson(element.data());
         supportReasonList.add(supportReasonModel);
       }
     }).catchError((error) {
@@ -843,9 +1042,14 @@ class FireStoreUtils {
     return supportReasonList;
   }
 
-  static Future<bool> addSupportTicket(SupportTicketModel supportTicketModel) async {
+  static Future<bool> addSupportTicket(
+      SupportTicketModel supportTicketModel) async {
     bool isAdded = false;
-    await fireStore.collection(CollectionName.supportTicket).doc(supportTicketModel.id).set(supportTicketModel.toJson()).then((value) {
+    await fireStore
+        .collection(CollectionName.supportTicket)
+        .doc(supportTicketModel.id)
+        .set(supportTicketModel.toJson())
+        .then((value) {
       isAdded = true;
     }).catchError((error) {
       log("Failed to add Support Ticket : $error");
@@ -863,7 +1067,8 @@ class FireStoreUtils {
         .get()
         .then((value) {
       for (var element in value.docs) {
-        SupportTicketModel supportTicketModel = SupportTicketModel.fromJson(element.data());
+        SupportTicketModel supportTicketModel =
+            SupportTicketModel.fromJson(element.data());
         supportTicketList.add(supportTicketModel);
       }
     }).catchError((error) {

@@ -2,8 +2,6 @@
 
 import 'dart:io';
 
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:driver/app/models/documents_model.dart';
 import 'package:driver/constant/constant.dart';
 import 'package:driver/constant_widgets/app_bar_with_border.dart';
@@ -14,6 +12,8 @@ import 'package:driver/theme/app_them_data.dart';
 import 'package:driver/theme/responsive.dart';
 import 'package:driver/utils/dark_theme_provider.dart';
 import 'package:driver/utils/extension/date_time_extension.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';

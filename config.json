@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "mytaxidriver-80b27",
+  "private_key_id": "f1a992c1dd9c8b629a6e14ffc0d3e60fde98d85c",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCxpb2QZVqS4wvg\nPZlOH9BgMnuOJLD/rflI4JFR1bNvLcIpQjgj7tuXO/saPAkFSN+Z5NSJkxwWD0S4\no/qOO00hkuqyxTzCFTEfE0RM6Ii5QzNMnLvgtGQkFn/qH3ibewq1udaAmVvVD0Xq\nF3bwZ2IaTLKias7sS5l7y5hHqzl8R9p6zMmEjz4wmqmv56wWnGjtqudNTBCYA+pj\ndbpO7Q8eH0IPt66DxvuCMZrmxdUT4mW2lBCkoZUk88cJ3GZ63/LIukbPVH3ci4Yz\nb1Jqws9dopld242DSnCo/6Z/Q/gFyS2y85yyfLOibwrgOX31Yd/GiXHylqBEReTO\nLhaUqYOHAgMBAAECggEAAjLSjR7b/lCqmHWj1/9Q8KfWJJ386oCRnkxYncbe7Gg/\nNbCCCcmFVKAsn3O1eAN9FO9rss6+WAawfa3ss/gQoGCHl3s52A58p+1w5nOfIY2K\nbQ86p7p6pxP367mf1yHnVmKO5UCuVw1UH2RSzpOQ95rI9uMvXWX91X8qeIJO5r+d\nnzGEx/ixkvFniYe1y0BFWYNhVKVpGEgm3faHbMIPLfAerAPGvYM35nMLvwyGFIHq\nD7b9J19Ii/QSsQ3w7r79e8ONvEMv0EbUClPT0m7kt9/sgDusZlAt8ab0nMAp3EtQ\nyce/jgdWJ/zfWqVv9raLPJcoE7xo2HXzL94kqffxNQKBgQDYqkVhGHftR30eEIhl\nWeP/SHKBdy0g+AQNrFMqbEdF9Ki1/d99vk50r5ftVe0HNRQJ4zJ/c1Y60vcOpQTE\n6NeVq9D+CF8qVIi522bMy/TFUexeKVshsnpqzyIp9y3k8XV7WoUKB85r/knAIw78\nFDtzt9sLdxD8ARIE+BN9nq0KtQKBgQDR5hUzyE8Cv6Ogp7+fQvqNBOtjR862Ru+a\n8AEM4AmRV1DLYQoR7boXx67UyXZxsish+q8YpHmHPuBQD1Tw6lI9RENrgnfcdZ1K\nRuVIJc4DlLJB60mjwR5mFOuJ7Qvk5dQQsGoA0zTFVzZuWrWqkjHSwMyJDjo5mOqI\nk5qwX1+uywKBgB+aHkp+PifO0JINCUf3J4k5sPHvRxbS9gxkgTDj4DV07RK2d92o\nX1snrXpBmTP+6vBSQjBSy1YDJWPub9aku6UqDW6wG+lZsSOiu8jNSuNpApftYkx0\n8uQXWD1Uv03wZhla56LB5rrbuTgcJPhhnxZOz9VJRaHsKgutf3JILactAoGBAIXX\nz2FLs4YvKWnCTeCCVz4hCvAt09RLe3Iy5JiPK8qwAOcPI9q22llbjVJGfO6XDAYI\n0ipGhvAE2ghzHljZMkO7Cbq+YSwFG51Hg+DzqmCCKwD5xeVTucyiPmee7lyxaP6T\nX6TTCO1lZWINGZaAzqBzLHmgxuP/bF5WsOcSifLtAoGALSmeK6S8nrFjaEMWoNS4\nfcHBZGRf8VHwr9B++TY9gimqwJCLqhVrPf8itDgCQNIl5J2ts/48pR4BFZ6Zpn/P\noJZ9/VM6DY1On2LJmXnJ6LOiwjCxYma+qQOTLrV4c+SfFazTxdByb74ZAx1Sehp/\nMMmsN1i8kNQqdnwvVR6N8nc=\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-5t3za@mytaxidriver-80b27.iam.gserviceaccount.com",
+  "client_id": "115919270375001281717",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-5t3za%40mytaxidriver-80b27.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

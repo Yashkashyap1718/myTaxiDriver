@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:driver/app/models/vehicle_type_model.dart';
 import 'package:driver/constant/custom_search_dialog.dart';
 import 'package:driver/constant_widgets/app_bar_with_border.dart';
@@ -9,6 +7,8 @@ import 'package:driver/constant_widgets/text_field_with_title.dart';
 import 'package:driver/theme/app_them_data.dart';
 import 'package:driver/theme/responsive.dart';
 import 'package:driver/utils/dark_theme_provider.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
@@ -26,8 +26,14 @@ class UpdateVehicleDetailsView extends StatelessWidget {
         init: UpdateVehicleDetailsController(),
         builder: (controller) {
           return Scaffold(
-            backgroundColor: themeChange.isDarkTheme() ? AppThemData.black : AppThemData.white,
-            appBar: AppBarWithBorder(title: "Vehicle Details".tr, bgColor: themeChange.isDarkTheme() ? AppThemData.black : AppThemData.white),
+            backgroundColor: themeChange.isDarkTheme()
+                ? AppThemData.black
+                : AppThemData.white,
+            appBar: AppBarWithBorder(
+                title: "Vehicle Details".tr,
+                bgColor: themeChange.isDarkTheme()
+                    ? AppThemData.black
+                    : AppThemData.white),
             body: Padding(
               padding: const EdgeInsets.fromLTRB(20, 16, 20, 16),
               child: SingleChildScrollView(
@@ -38,7 +44,9 @@ class UpdateVehicleDetailsView extends StatelessWidget {
                     Text(
                       'Select Vehicle Type'.tr,
                       style: GoogleFonts.inter(
-                        color: themeChange.isDarkTheme() ? AppThemData.grey25 : AppThemData.grey950,
+                        color: themeChange.isDarkTheme()
+                            ? AppThemData.grey25
+                            : AppThemData.grey950,
                         fontSize: 16,
                         fontWeight: FontWeight.w500,
                       ),
@@ -49,7 +57,9 @@ class UpdateVehicleDetailsView extends StatelessWidget {
                       margin: const EdgeInsets.only(top: 16, bottom: 16),
                       decoration: BoxDecoration(
                         border: Border.all(
-                          color: themeChange.isDarkTheme() ? AppThemData.grey800 : AppThemData.grey100,
+                          color: themeChange.isDarkTheme()
+                              ? AppThemData.grey800
+                              : AppThemData.grey100,
                         ),
                         borderRadius: BorderRadius.circular(12.0),
                       ),
@@ -58,22 +68,30 @@ class UpdateVehicleDetailsView extends StatelessWidget {
                           () => DropdownButton<VehicleTypeModel>(
                             style: GoogleFonts.inter(
                               fontSize: 16,
-                              color: themeChange.isDarkTheme() ? AppThemData.white : AppThemData.grey950,
+                              color: themeChange.isDarkTheme()
+                                  ? AppThemData.white
+                                  : AppThemData.grey950,
                             ),
                             hint: Text(
                               "Select Vehicle Type".tr,
                               style: GoogleFonts.inter(
-                                color: themeChange.isDarkTheme() ? AppThemData.white : AppThemData.grey950,
+                                color: themeChange.isDarkTheme()
+                                    ? AppThemData.white
+                                    : AppThemData.grey950,
                                 fontSize: 16,
                               ),
                             ),
                             itemHeight: 70,
-                            dropdownColor: themeChange.isDarkTheme() ? AppThemData.black : AppThemData.white,
+                            dropdownColor: themeChange.isDarkTheme()
+                                ? AppThemData.black
+                                : AppThemData.white,
                             padding: const EdgeInsets.only(right: 12),
                             selectedItemBuilder: (context) {
-                              return controller.vehicleTypeList.map((VehicleTypeModel value) {
+                              return controller.vehicleTypeList
+                                  .map((VehicleTypeModel value) {
                                 return Padding(
-                                  padding: const EdgeInsets.only(left: 12, right: 12),
+                                  padding: const EdgeInsets.only(
+                                      left: 12, right: 12),
                                   child: Row(
                                     children: [
                                       Image.network(
@@ -90,7 +108,9 @@ class UpdateVehicleDetailsView extends StatelessWidget {
                                 );
                               }).toList();
                             },
-                            items: controller.vehicleTypeList.map<DropdownMenuItem<VehicleTypeModel>>((VehicleTypeModel value) {
+                            items: controller.vehicleTypeList
+                                .map<DropdownMenuItem<VehicleTypeModel>>(
+                                    (VehicleTypeModel value) {
                               return DropdownMenuItem(
                                 value: value,
                                 child: Column(
@@ -111,7 +131,12 @@ class UpdateVehicleDetailsView extends StatelessWidget {
                                     const SizedBox(
                                       height: 10,
                                     ),
-                                    Visibility(visible: controller.vehicleTypeList.indexOf(value) != (controller.vehicleTypeList.length - 1), child: const Divider())
+                                    Visibility(
+                                        visible: controller.vehicleTypeList
+                                                .indexOf(value) !=
+                                            (controller.vehicleTypeList.length -
+                                                1),
+                                        child: const Divider())
                                   ],
                                 ),
                               );
@@ -122,7 +147,8 @@ class UpdateVehicleDetailsView extends StatelessWidget {
                             onChanged: isUploaded
                                 ? null
                                 : (VehicleTypeModel? newSelectedBank) {
-                                    controller.vehicleTypeModel.value = newSelectedBank!;
+                                    controller.vehicleTypeModel.value =
+                                        newSelectedBank!;
                                   },
                             value: controller.vehicleTypeModel.value,
                           ),
@@ -134,7 +160,9 @@ class UpdateVehicleDetailsView extends StatelessWidget {
                           ? null
                           : () {
                               CustomSearchDialog.vehicleBrandSearchDialog(
-                                  bgColor: themeChange.isDarkTheme() ? AppThemData.black : AppThemData.white,
+                                  bgColor: themeChange.isDarkTheme()
+                                      ? AppThemData.black
+                                      : AppThemData.white,
                                   context: context,
                                   title: "Search Vehicle Brand",
                                   list: controller.vehicleBrandList);
@@ -153,7 +181,9 @@ class UpdateVehicleDetailsView extends StatelessWidget {
                           ? null
                           : () {
                               CustomSearchDialog.vehicleModelSearchDialog(
-                                  bgColor: themeChange.isDarkTheme() ? AppThemData.black : AppThemData.white,
+                                  bgColor: themeChange.isDarkTheme()
+                                      ? AppThemData.black
+                                      : AppThemData.white,
                                   context: context,
                                   title: "Search Vehicle Model",
                                   list: controller.vehicleModelList);
@@ -184,11 +214,14 @@ class UpdateVehicleDetailsView extends StatelessWidget {
                           buttonTextColor: AppThemData.black,
                           onTap: () {
                             if (controller.vehicleBrandController.text.isNotEmpty &&
-                                controller.vehicleModelController.text.isNotEmpty &&
-                                controller.vehicleNumberController.text.isNotEmpty) {
+                                controller
+                                    .vehicleModelController.text.isNotEmpty &&
+                                controller
+                                    .vehicleNumberController.text.isNotEmpty) {
                               controller.saveVehicleDetails();
                             } else {
-                              ShowToastDialog.showToast("Please enter a valid details".tr);
+                              ShowToastDialog.showToast(
+                                  "Please enter a valid details".tr);
                             }
                           },
                           size: const Size(208, 52),
